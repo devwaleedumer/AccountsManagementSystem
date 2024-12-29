@@ -8,37 +8,37 @@ import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Time
     },
      {
         title: "Users",
-        to: "/users",
+        to: "ams/users",
         icon: Users2
     },
     {
         title: "Employees",
-        to: "/employees",
+        to: "ams/employees",
         icon: Building
     },
     {
         title: "Salary",
-        to: "/salary",
+        to: "ams/salary",
         icon: ReceiptText
     },
      {
         title: "Expenditures",
-        to: "/expenditures",
+        to: "ams/expenditures",
         icon: Receipt
     },
      {
         title: "Heads",
-        to: "/head-of-accounts",
+        to: "ams/head-of-accounts",
         icon: Boxes
     },
      {
         title: "Departments",
-        to: "/departments",
+        to: "ams/departments",
         icon: Building2
     },
      {
         title: "Activities",
-        to: "/activities",
+        to: "ams/activities",
         icon: Timer
     },
     

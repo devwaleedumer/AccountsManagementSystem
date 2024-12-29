@@ -17,9 +17,18 @@ export const authService = createApi({
         }
       }
     }),
+      register: builder.mutation({
+      query: (data) => {
+        return {
+          url: `Accounts/register`,
+          method: 'POST',
+          body:data,
+        }
+      }
+    }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useLoginMutation} = authService
+export const {useLoginMutation,useRegisterMutation} = authService

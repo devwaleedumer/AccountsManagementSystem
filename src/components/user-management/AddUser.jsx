@@ -96,3 +96,4 @@ export const AddUser = () => {
     </div>
   )
 }
+export default AddUser

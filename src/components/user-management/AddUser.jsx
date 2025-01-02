@@ -48,7 +48,7 @@ export const AddUser = () => {
        }
    },[isSuccess]);
   return (
-    <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto">
+    <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center"><PlusCircle className="size-5 inline-block mr-2"/><span> Register User</span></div>

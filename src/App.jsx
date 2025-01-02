@@ -7,6 +7,8 @@ import UserList from "./components/user-management/UserList"
 import AddUser  from "./components/user-management/AddUser"
 import ViewUser from "./components/user-management/ViewUser"
 import Table from "./components/user-management/Table"
+import Salary from "./components/salary/salary"
+import CreateDepartmentType from "./components/department-type/CreateDepartmentType"
 function App() {
 
   return (
@@ -20,7 +22,9 @@ function App() {
           <Route  path="users/view-user" element={<ViewUser/>}/> 
           <Route  path="users/add-user" element={<AddUser/>}/> 
         <Route  path="users/table" element={<Table/>}/>
-          
+        <Route path="salary"  element={<Salary/>}/>
+        <Route path="department-type/create"  element={<CreateDepartmentType/>}/>
+
         </Route>
         <Route path="/login"  element={<Login/>}/>
          

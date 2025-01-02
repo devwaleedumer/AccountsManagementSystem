@@ -2,7 +2,9 @@ import PropTypes from "prop-types";
 import './Sidebar.css'
 import sideBarMenuItems from "../../../core/data/home-sidebar-data";
 import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 const Sidebar = ({toggleSidebar,setToggleSidebar}) => {
+  const route = useNavigate();
 const handleToggleSidebar = () => {
     setToggleSidebar(!toggleSidebar);}
   return (
@@ -12,7 +14,9 @@ const handleToggleSidebar = () => {
             <h1 className={`font-bold text-primary-2 text-2xl transition-opacity duration-500 ${toggleSidebar == false ? "opacity-100" : "opacity-0" }`}>
               AMS
             </h1>
-           <img src="/src/assets/images/logo.svg" onClick={() => handleToggleSidebar()} className={`size-[50px] cursor-pointer absolute transition-all duration-500 right-0`} alt="" />
+           <img src="/src/assets/images/logo.svg" onClick={() => {
+            handleToggleSidebar();
+           }} className={`size-[50px] cursor-pointer absolute transition-all duration-500 right-0`} alt="" />
         </div>
         {/* menu */}
       <div className="bg-image h-full w-full overflow-scroll hide-scroller pb-32">
@@ -23,6 +27,8 @@ const handleToggleSidebar = () => {
            hover:duration-100 hover:ease-in-out" 
            onClick={() => {
               handleToggleSidebar();
+            route(item.to)
+              
           }}>
             <div className=" flex justify-center items-center h-[50px] leading-[50px] min-w-[50px]">
               {<item.icon className="size-5"/>}

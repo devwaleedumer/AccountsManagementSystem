@@ -3,42 +3,42 @@ import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Time
  const sideBarMenuItems = [
     {
         title: "Dashboard",
-        to: "/dashboard",
+        to: "",
         icon: LayoutDashboard
     },
      {
         title: "Users",
-        to: "ams/users",
+        to: "users",
         icon: Users2
     },
     {
         title: "Employees",
-        to: "ams/employees",
+        to: "employees",
         icon: Building
     },
     {
         title: "Salary",
-        to: "ams/salary",
+        to: "salary",
         icon: ReceiptText
     },
      {
         title: "Expenditures",
-        to: "ams/expenditures",
+        to: "expenditures",
         icon: Receipt
     },
      {
         title: "Heads",
-        to: "ams/head-of-accounts",
+        to: "head-of-accounts",
         icon: Boxes
     },
      {
         title: "Departments",
-        to: "ams/departments",
+        to: "departments",
         icon: Building2
     },
      {
         title: "Activities",
-        to: "ams/activities",
+        to: "activities",
         icon: Timer
     },
     

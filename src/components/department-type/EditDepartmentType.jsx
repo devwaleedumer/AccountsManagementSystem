@@ -1,37 +1,38 @@
-import { ArrowLeft, Loader, PlusIcon, XIcon } from "lucide-react";
+import { ArrowLeft, Loader, LoaderCircleIcon, PlusIcon, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
-import { useCreateDepartmentTypeMutation } from "../../redux/services/departmentTypeService";
+import {  useEditDepartmentTypeMutation, useGetDepartmentTypeByIdQuery } from "../../redux/services/departmentTypeService";
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 // Validation schema using Yup
 const schema = yup.object().shape({
+  id: yup.number().nullable(),
   name: yup.string().required("Department Type name  is required"),
   description: yup.string().required("description  is required"),
 });
-const CreateDepartmentType = () => {
+const EditDepartmentType = () => {
+ const { id } = useParams(); // Get the "id" parameter from the route
+
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
-  const [CreateDepartmentType, { isLoading, isError, isSuccess }] =
-    useCreateDepartmentTypeMutation();
-  const {
+  const [editDepartment, { isLoading, isError, isSuccess }] =
+    useEditDepartmentTypeMutation();
+    const {isLoading:departmentLoading,data} = useGetDepartmentTypeByIdQuery(id); // Fetch the department type by id    
+    const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
+    values :data
   });
-  
   const onSubmit = async (data) => {
-    await CreateDepartmentType(data);
-     reset({
-      name: '',
-      description: ''
-    });
+    data.id = id; // Add the "id" parameter to the data object
+    await editDepartment(data);
   };
   // isSuccess = false
   // isSuccess = true
@@ -42,19 +43,21 @@ const CreateDepartmentType = () => {
   },
   [isSuccess,isError,isLoading])
   return (
-    <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
+    departmentLoading ?   <div className='w-full h-full'>
+        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
+    </div> : <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center">
             <PlusIcon className="size-5 inline-block mr-2" />
-            <span> Add Department type</span>
+            <span> Edit Department type</span>
           </div>
         </div>
         {
           showAlert && isSuccess &&  (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
               <p className="font-bold">Success</p>
-              <p>Department Type created successfully</p>
+              <p>Department Type Edited successfully</p>
               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
                 <XIcon />
               </button>
@@ -108,17 +111,17 @@ const CreateDepartmentType = () => {
             )}
           </div>
           <div className="flex justify-between">
-            <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
+            <Link  to={'/ams/department-type'} className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
               <ArrowLeft className="mr-1" />
               Back
-            </button>
+            </Link>
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}
               className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
             >
               {!isLoading ? (
-                "Create"
+                "Update"
               ) : (
                 <Loader className="size-5 text-center animate-spin" />
               )}
@@ -126,8 +129,8 @@ const CreateDepartmentType = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 
-export default CreateDepartmentType;
+export default EditDepartmentType;

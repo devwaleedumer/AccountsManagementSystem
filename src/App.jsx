@@ -9,6 +9,9 @@ import ViewUser from "./components/user-management/ViewUser"
 import Table from "./components/user-management/Table"
 import Salary from "./components/salary/salary"
 import CreateDepartmentType from "./components/department-type/CreateDepartmentType"
+import DepartmentTypes from "./components/department-type/DepartmentTypes"
+import EditDepartmentType from "./components/department-type/EditDepartmentType"
+import ViewDepartmentType from "./components/department-type/ViewDepartmentType"
 function App() {
 
   return (
@@ -24,7 +27,9 @@ function App() {
         <Route  path="users/table" element={<Table/>}/>
         <Route path="salary"  element={<Salary/>}/>
         <Route path="department-type/create"  element={<CreateDepartmentType/>}/>
-
+        <Route path="department-type/edit/:id"  element={<EditDepartmentType/>}/>
+        <Route path="department-type/view/:id"  element={<ViewDepartmentType/>}/>
+        <Route path="department-type"  element={<DepartmentTypes/>}/>
         </Route>
         <Route path="/login"  element={<Login/>}/>
          

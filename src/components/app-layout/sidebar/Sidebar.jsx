@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 import './Sidebar.css'
 import sideBarMenuItems from "../../../core/data/home-sidebar-data";
 import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Sidebar = ({toggleSidebar,setToggleSidebar}) => {
-  const route = useNavigate();
 const handleToggleSidebar = () => {
     setToggleSidebar(!toggleSidebar);}
   return (
@@ -21,20 +20,16 @@ const handleToggleSidebar = () => {
         {/* menu */}
       <div className="bg-image h-full w-full overflow-scroll hide-scroller pb-32">
          {sideBarMenuItems.map((item,index) =>  
-         <div key={index+item.title} className="flex items-center rounded-[12px] 
+         <Link to={item.to}  key={index+item.title} className="flex items-center rounded-[12px] 
           my-2  border cursor-pointer bg-primary-2 text-primary-foreground 
           overflow-hidden hover:bg-[green] hover:transition-colors
            hover:duration-100 hover:ease-in-out" 
-           onClick={() => {
-              handleToggleSidebar();
-            route(item.to)
-              
-          }}>
+           >
             <div className=" flex justify-center items-center h-[50px] leading-[50px] min-w-[50px]">
               {<item.icon className="size-5"/>}
             </div>
            <span className={`transition-opacity duration-500 ${toggleSidebar ? "opacity-0": "opacity-100"}`} >{item.title}</span>
-          </div> )}
+          </Link> )}
       </div>
       {/* Footer */}
       <div className="py-[6px] px-[14px] absolute bottom-0 border-t  left-0 w-full bg-primary-2 text-primary-foreground z-[99]">

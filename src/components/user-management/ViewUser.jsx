@@ -1,5 +1,4 @@
 import { CreditCardIcon } from "lucide-react";
-import React from "react";
 
 function ViewUser() {
   return (

@@ -37,6 +37,11 @@ import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Time
         icon: Building2
     },
      {
+        title: "Department Type",
+        to: "department-type",
+        icon: Building2
+    },
+     {
         title: "Activities",
         to: "activities",
         icon: Timer

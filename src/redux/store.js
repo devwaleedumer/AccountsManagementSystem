@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     // Add the generated auth reducer to the store
     [authService.reducerPath]: authService.reducer,
-    [departmentTypeService.reducerPath]: authService.reducer,
+    [departmentTypeService.reducerPath]: departmentTypeService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authService.middleware).concat(departmentTypeService.middleware),

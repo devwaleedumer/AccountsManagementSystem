@@ -2,7 +2,7 @@ import { Plus } from "lucide-react"
 
 const Salary = () => {
   return (
-    <div className="border w-full h-full p-4 rounded-md  bg-image font-roboto">
+    <div className="border w-full h-full p-4 rounded-md   font-roboto">
      <div>
         <h1 className="text-3xl font-semibold">Employee Payroll</h1>
      <h4 className="text-gray-700">Generate Monthly Payroll for Employee</h4>
@@ -22,25 +22,61 @@ const Salary = () => {
             </div>
             <div className="grid gap-3 grid-cols-6">
                   <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                Rent Allowance
+                Qualiofication Allowance
             </button>
-            
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Additioanl Allowance (if any)
+            </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
                 Medical Allowance
-            </button>
-             <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                Conveyance Allow.
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
                 Entertainment Allowance
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                20% Ad-hoc Relief Allow (Freez 2013)
+                House Rent
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                25% Disparity Reduction Allowane
+                Conveyance Allowane
             </button>
-            
+            <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Computer Allowance
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Senior Post Allowance (if any)
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Orderly Allowance
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Integrated Allowance
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+                Headship Allownace
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+             20% Ad-hoc Relief Allow (Freez 2013) 
+
+            </button>
+            <button className=" py-2 rounded-md px-2 bg-primary text-white">
+            25% Disparity Reduction Allowane 
+            </button>
+            <button className=" py-2 rounded-md px-2 bg-primary text-white">
+            15% Disparity Reduction Allowane 
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+             15% Ad-hoc Relief Allow (Freez 2022) 
+             </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+             Evening Shift Allowance  
+             </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+             " Over Time (if any) "
+            </button>
+             <button className=" py-2 rounded-md px-2 bg-primary text-white">
+             " Arrears (if any) "
+            </button>
+             
             </div>
         </div>
      </div>
@@ -63,19 +99,25 @@ const Salary = () => {
             </button>
             
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                Medical Allowance
+             Group Insurance 
+
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                Conveyance Allow.
+             Masjid Fund 
+
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                Entertainment Allowance
+             G.P.F 
+
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                20% Ad-hoc Relief Allow (Freez 2013)
+             G.P. Fund Advance 
             </button>
              <button className=" py-2 rounded-md px-2 bg-primary text-white">
-                25% Disparity Reduction Allowane
+             Any other deductions 
+            </button>
+            <button className=" py-2 rounded-md px-2 bg-primary text-white">
+            Income Tax  
             </button>
             
             </div>

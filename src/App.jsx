@@ -12,7 +12,6 @@ import CreateDepartmentType from "./components/department-type/CreateDepartmentT
 import EditDepartmentType from "./components/department-type/EditDepartmentType"
 import ViewDepartmentType from "./components/department-type/ViewDepartmentType"
 import DepartmentTypes from "./components/department-type/DepartmentTypes"
-import DepartmentsList from "./components/Departments/DepartmentsList"
 function App() {
 
   return (

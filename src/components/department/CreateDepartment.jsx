@@ -1,21 +1,24 @@
-import { ArrowLeft, Loader, PlusIcon, XIcon } from "lucide-react";
+import { ArrowLeft, Loader, LoaderCircleIcon, PlusIcon, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
-import { useCreateDepartmentTypeMutation } from "../../redux/services/departmentTypeService";
 import { useEffect, useState } from "react";
+import { useCreateDepartmentMutation } from "../../redux/services/departmentService";
+import { useGetAllDepartmentTypesQuery } from "../../redux/services/departmentTypeService";
 // Validation schema using Yup
 const schema = yup.object().shape({
   name: yup.string().required("Department Type name  is required"),
   description: yup.string().required("description  is required"),
+  departmentTypeId: yup.number().required("Department Type is required")
+      .typeError("Please select a valid department type"), // Ensures a valid number is selected
 });
-const CreateDepartmentType = () => {
+const CreateDepartment = () => {
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
   const [CreateDepartmentType, { isLoading, isError, isSuccess }] =
-    useCreateDepartmentTypeMutation();
+    useCreateDepartmentMutation();
   const {
     register,
     handleSubmit,
@@ -24,12 +27,16 @@ const CreateDepartmentType = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const {isLoading:departmentTypeLoading, data} = useGetAllDepartmentTypesQuery();
   
   const onSubmit = async (data) => {
+    data.departmentTypeId = parseInt(data.departmentTypeId);
     await CreateDepartmentType(data);
      reset({
       name: '',
-      description: ''
+      description: '',
+      departmentTypeId: ''
     });
   };
   // isSuccess = false
@@ -40,20 +47,21 @@ const CreateDepartmentType = () => {
   
   },
   [isSuccess,isError,isLoading])
-  return (
+  return ( 
+    !departmentTypeLoading ?
     <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center">
             <PlusIcon className="size-5 inline-block mr-2" />
-            <span> Add Department type</span>
+            <span> Add Department</span>
           </div>
         </div>
         {
           showAlert && isSuccess &&  (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
               <p className="font-bold">Success</p>
-              <p>Department Type created successfully</p>
+              <p>Department  created successfully</p>
               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
                 <XIcon />
               </button>
@@ -74,13 +82,13 @@ const CreateDepartmentType = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-              Department Type Name
+              Department Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Department Type Name"
+              placeholder="Department  Name"
               {...register("name")}
             />
             {errors.name && (
@@ -106,6 +114,30 @@ const CreateDepartmentType = () => {
               </p>
             )}
           </div>
+           <div className="w-full">
+            <label className="block  mb-1" htmlFor="departmentTypeId">
+              Department Type
+            </label>
+            <select  id="departmentTypeId"
+            defaultValue="" 
+          {...register("departmentTypeId")}
+            className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+><option value="" >Select Department</option>
+            {
+                data.map((item,index) =>(
+
+                <option value={item.id} key={index+item.name}>{item.name}</option>
+
+                ))
+            }
+
+            </select>
+            {errors.departmentTypeId && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.departmentTypeId.message}
+              </p>
+            )}
+          </div>
           <div className="flex justify-between">
             <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
               <ArrowLeft className="mr-1" />
@@ -126,7 +158,11 @@ const CreateDepartmentType = () => {
         </div>
       </div>
     </div>
+    :
+      <div className='w-full h-full'>
+        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
+    </div>
   );
 };
 
-export default CreateDepartmentType;
+export default CreateDepartment;

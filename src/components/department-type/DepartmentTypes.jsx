@@ -82,7 +82,7 @@ const DepartmentTypes = () => {
                    <Link to={`edit/${item.id}`} className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <PenSquareIcon className="size-5"/>
                    </Link>
-                     <button onClick={handleDelete(data)}   className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
+                     <button onClick={() => handleDelete(item.id)}   className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <Trash2 className="size-5"/>
                    </button>
                      <Link to={`view/${item.id}`} className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">

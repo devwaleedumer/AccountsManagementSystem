@@ -4,18 +4,18 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
-import { useCreateDepartmentTypeMutation } from "../../redux/services/departmentTypeService";
 import { useEffect, useState } from "react";
+import { useCreateBasePayMutation } from "../../redux/services/basicPaysService";
 // Validation schema using Yup
 const schema = yup.object().shape({
-  name: yup.string().required("Department Type name  is required"),
-  description: yup.string().required("description  is required"),
+  payScaleName: yup.string().required("Pay scale   is required"),
+  basePay: yup.number().required("description  is required").typeError('Base pay must be a number'),
 });
-const CreateDepartmentType = () => {
+const CreateBasicPay = () => {
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
-  const [CreateDepartmentType, { isLoading, isError, isSuccess }] =
-    useCreateDepartmentTypeMutation();
+  const [CreateBasePay, { isLoading, isError, isSuccess }] =
+    useCreateBasePayMutation();
   const {
     register,
     handleSubmit,
@@ -26,10 +26,10 @@ const CreateDepartmentType = () => {
   });
   
   const onSubmit = async (data) => {
-    await CreateDepartmentType(data);
+    await CreateBasePay(data);
      reset({
-      name: '',
-      description: ''
+      payScaleName: '',
+      basePay: ''
     });
   };
   // isSuccess = false
@@ -46,14 +46,14 @@ const CreateDepartmentType = () => {
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center">
             <PlusIcon className="size-5 inline-block mr-2" />
-            <span> Add Department type</span>
+            <span> Add Basic pay Scale</span>
           </div>
         </div>
         {
           showAlert && isSuccess &&  (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
               <p className="font-bold">Success</p>
-              <p>Department Type created successfully</p>
+              <p>Basic pay created successfully</p>
               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
                 <XIcon />
               </button>
@@ -74,35 +74,35 @@ const CreateDepartmentType = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-              Department Type Name
+              Basic Pay Scale Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Department Type Name"
-              {...register("name")}
+              placeholder="Pay scale Name"
+              {...register("payScaleName")}
             />
-            {errors.name && (
+            {errors.payScaleName && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.name.message}
+                {errors.payScaleName.message}
               </p>
             )}
           </div>
           <div className="w-full">
-            <label className="block  mb-1" htmlFor="description">
-              Description
+            <label className="block  mb-1" htmlFor="basePay">
+              Base Pay
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="description"
-              type="text"
-              placeholder="Description"
-              {...register("description")}
+              id="basePay"
+              type="number"
+              placeholder="Base Pay"
+              {...register("basePay")}
             />
-            {errors.description && (
+            {errors.basePay && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.description.message}
+                {errors.basePay.message}
               </p>
             )}
           </div>
@@ -129,4 +129,4 @@ const CreateDepartmentType = () => {
   );
 };
 
-export default CreateDepartmentType;
+export default CreateBasicPay;

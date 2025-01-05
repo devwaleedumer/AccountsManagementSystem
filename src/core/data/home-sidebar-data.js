@@ -1,4 +1,4 @@
-import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Timer, Users2 } from "lucide-react";
+import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandingIcon, Receipt, ReceiptText, Timer, UserRoundCheckIcon, UserRoundCogIcon, UserRoundPenIcon, UserRoundPlusIcon, Users2, UserSquare2Icon, UsersRoundIcon } from "lucide-react";
 
  const sideBarMenuItems = [
     {
@@ -9,12 +9,12 @@ import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Time
      {
         title: "Users",
         to: "users",
-        icon: Users2
+        icon: UserRoundPlusIcon
     },
     {
         title: "Employees",
         to: "employees",
-        icon: Building
+        icon: Users2
     },
     {
         title: "Salary",
@@ -39,7 +39,7 @@ import { Boxes, Building, Building2, LayoutDashboard, Receipt, ReceiptText, Time
      {
         title: "Department Type",
         to: "department-type",
-        icon: Building2
+        icon: BuildingIcon
     },
      {
         title: "Activities",

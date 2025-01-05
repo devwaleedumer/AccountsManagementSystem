@@ -9,7 +9,6 @@ import ViewUser from "./components/user-management/ViewUser"
 import Table from "./components/user-management/Table"
 import Salary from "./components/salary/salary"
 import CreateDepartmentType from "./components/department-type/CreateDepartmentType"
-import DepartmentTypes from "./components/department-type/DepartmentTypes"
 import EditDepartmentType from "./components/department-type/EditDepartmentType"
 import ViewDepartmentType from "./components/department-type/ViewDepartmentType"
 import CreateDepartment from "./components/department/CreateDepartment"
@@ -17,6 +16,7 @@ import CreateDesignation from "./components/designation/CreateDesignation"
 import CreateBasicPay from "./components/basicPay/CreateBasicPay"
 import CreateEmployee from "./components/employee/CreateEmployee"
 import CreateEmployeeType from "./components/employee-type/CreateEmployeeType"
+import DepartmentTypes from "./components/department-type/DepartmentTypes"
 function App() {
 
   return (
@@ -30,7 +30,10 @@ function App() {
           <Route  path="users/view-user" element={<ViewUser/>}/> 
           <Route  path="users/add-user" element={<AddUser/>}/> 
         <Route  path="users/table" element={<Table/>}/>
+
         <Route path="salary"  element={<Salary/>}/>
+        
+        <Route path="department-type"  element={<DepartmentTypes/>}/>
         <Route path="department-type/create"  element={<CreateDepartmentType/>}/>
         <Route path="department-type/edit/:id"  element={<EditDepartmentType/>}/>
         <Route path="department-type/view/:id"  element={<ViewDepartmentType/>}/>
@@ -44,9 +47,6 @@ function App() {
         </Route>
         <Route path="/login"  element={<Login/>}/>
          
-        
-
-
 
       </Routes>
      </BrowserRouter>

@@ -2,6 +2,7 @@ import { LoaderCircleIcon, LucideEye } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { useGetDepartmentTypeByIdQuery } from '../../redux/services/departmentTypeService';
 
+
 const ViewDepartmentType = () => {
      const { id } = useParams(); // Get the "id" parameter from the route
     const {isLoading,data} = useGetDepartmentTypeByIdQuery(id); // Fetch the department type by id    

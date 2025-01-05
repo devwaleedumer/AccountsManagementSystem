@@ -1,4 +1,4 @@
-import { ArrowLeft, CreditCard, IdCardIcon, Info, Loader, Users, XIcon } from "lucide-react";
+import { ArrowLeft, CreditCard, CreditCardIcon, IdCardIcon, Info, Loader, LocateFixedIcon, LocateIcon, LocateOffIcon, LucideBanknote, PiggyBank, Users, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -104,6 +104,8 @@ const CreateEmployee = () => {
             </button>
           </div>
         )}
+      
+      
        {/* Personal Info */}
        <div className="p-4 ">
         <div className="flex mb-4 bg-primary-2 shadow-lg rounded-lg py-3 px-2 text-white items-center">
@@ -119,7 +121,7 @@ const CreateEmployee = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="fullName"
               type="text"
-              placeholder="Designation"
+              placeholder="Full Name"
               {...register("fullName")}
             />
             {errors.fullName && (
@@ -130,7 +132,7 @@ const CreateEmployee = () => {
           </div>
           <div className="w-full">
             <label className="block  mb-1" htmlFor="fatherNameOrHusbandName">
-              Husband or Father Name
+              Father or Husband Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -163,7 +165,7 @@ const CreateEmployee = () => {
             )}
           </div>
             <div className="w-full">
-            <label className="block  mb-1" htmlFor="CNIC">
+            <label className="block  mb-1" htmlFor="Contact Number">
               Contact Number
             </label>
             <input
@@ -171,7 +173,7 @@ const CreateEmployee = () => {
               id="contactNo"
               type="text"
               placeholder="Contact Number"
-              {...register("contactNo")}
+              {...register("Contact Number")}
             />
             {errors.contactNo && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -180,12 +182,29 @@ const CreateEmployee = () => {
             )}
           </div>
           <div className="w-full">
-            <label className="block  mb-1" htmlFor="fullName">
+            <label className="block  mb-1" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="email"
+              type="text"
+              placeholder="Email"
+              {...register("email")}
+            />
+            {errors.contactNo && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.contactNo.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Date of Birth">
               Date of Birth
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="fullName"
+              id="DOB"
               type="date"
               placeholder="Date of Birth"
               {...register("dOB")}
@@ -235,9 +254,9 @@ const CreateEmployee = () => {
               <option value="Hindu">Hindu</option>
               <option value="Other">Other</option>
             </select>
-            {errors.gender && (
+            {errors.religion && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.gender.message}
+                {errors.religion.message}
               </p>
             )}
           </div>
@@ -267,28 +286,15 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
-             <div className="w-full">
-            <label className="block  mb-1" htmlFor="joiningDate">
-              Joining Date
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="joiningDate"
-              type="date"
-              placeholder="Joining Date"
-              {...register("joiningDate")}
-            />
-            {errors.joiningDate && (
-              <p className="text-red-500 text-xs italic mt-1">
-                {errors.joiningDate.message}
-              </p>
-            )}
-          </div>
+            
         </div>
        </div>
        <div className="p-4">
+       
+       
+       
         <div className="flex mb-4 bg-primary-2 shadow-lg rounded-lg py-3 px-2 text-white items-center">
-            <CreditCard className="size-5 inline-block mr-2" />
+            <LocateFixedIcon className="size-5 inline-block mr-2" />
             <span className="text-xl">Address Information</span>
         </div>
         <div className="grid grid-cols-3 gap-4">
@@ -345,17 +351,16 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
-
-               <div className="w-full col-span-3">
-            <label className="block  mb-1" htmlFor="address">
-              Address
+          <div className="w-full col-span-3">
+            <label className="block  mb-1" htmlFor="PermanentAddress">
+              Permanent Address
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="address"
+              id="postaladdress"
               type="text"
-              placeholder="Address"
-              {...register("address")}
+              placeholder="PermanentAddress"
+              {...register("PermanentAddress")}
             />
             {errors.address && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -365,22 +370,29 @@ const CreateEmployee = () => {
           </div>
         </div>
        </div>
+      
+      
+      
+      
+      
+      
+      
          <div className="p-4">
              <div className="flex mb-4 bg-primary-2 shadow-lg rounded-lg py-3 px-2 text-white items-center">
             <Info className="size-5 inline-block mr-2" />
             <span className="text-xl">Other Information</span>
         </div>
-        <div className="">
+        <div className="grid grid-cols-3 gap-4">
              <div className="w-full">
-            <label className="block  mb-1" htmlFor="ntn">
-              NTN
+            <label className="block  mb-1" htmlFor="Desigantion">
+              Desigantion
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="ntn"
+              id="desigantion"
               type="text"
-              placeholder="NTN"
-              {...register("ntn")}
+              placeholder="Desigantion"
+              {...register("Desigantion")}
             />
             {errors.ntn && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -388,8 +400,216 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Scale">
+              Scale
+            </label>
+            <select
+              id="Scale"
+              defaultValue=""
+              {...register("Scale")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Scale</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              
+            </select>
+            {errors.gender && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.gender.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="religion">
+              Employement Type 
+            </label>
+            <select
+              id="EmployementType"
+              defaultValue=""
+              {...register("EmployementType")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Employement Type </option>
+              <option value="Regular">Regular</option>
+              <option value="Contract">Contract</option>
+              <option value="Visitor">Visitor</option>
+              <option value="Fixed Contract">Fixed Contract</option>
+            </select>
+            {errors.gender && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.gender.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="rEmployee Category">
+              Employee Category
+            </label>
+            <select
+              id="EmployeeCategory"
+              defaultValue=""
+              {...register("EmployeeCategory")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Employee Category </option>
+              <option value="Teacher">Teacher</option>
+              <option value="Officer">Officer</option>
+              <option value="Staff">Staff</option>
+            </select>
+            {errors.gender && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.gender.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Qualification">
+            Qualification
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="Qualification"
+              type="text"
+              placeholder="Qualification"
+              {...register("Qualification")}
+            />
+            {errors.ntn && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.ntn.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="joiningDate">
+              Joining Date
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="joiningDate"
+              type="date"
+              placeholder="Joining Date"
+              {...register("joiningDate")}
+            />
+            {errors.joiningDate && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.joiningDate.message}
+              </p>
+            )}
+          </div>
         </div>
         </div>
+       
+
+
+
+
+       
+        <div className="p-4">
+        <div className="flex mb-4 bg-primary-2 shadow-lg rounded-lg py-3 px-2 text-white items-center">
+            <CreditCardIcon className="size-5 inline-block mr-2" />
+            <span className="text-xl">Employee Bank Details</span>
+        </div>
+       <div className="grid grid-cols-3 gap-4">
+       <div className="w-full">
+            <label className="block  mb-1" htmlFor="Bank Name">
+              Bank Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="bankname"
+              type="text"
+              placeholder="Bank Name"
+              {...register("Bank Name")}
+            />
+            {errors.bankName && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.bankName.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Branch Address">
+              Branch Address
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="branchname"
+              type="text"
+              placeholder="Branch Address"
+              {...register("Branch Address")}
+            />
+            {errors.address && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.address.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Bank Name">
+              Branch Code
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="branchcode"
+              type="text"
+              placeholder="Branch Code"
+              {...register("fatherNameOrHusbandName")}
+            />
+            {errors.branchCode && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.branchCode.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="Bank Name">
+              Account Number
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="Acc no"
+              type="text"
+              placeholder="Account Number"
+              {...register("fatherNameOrHusbandName")}
+            />
+            {errors.accountNumber && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.accountNumber.message}
+              </p>
+            )}
+          </div>
+       </div>
+        </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
         <div className="flex justify-between">
           <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
             <ArrowLeft className="mr-1" />

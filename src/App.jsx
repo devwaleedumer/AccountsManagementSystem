@@ -38,6 +38,7 @@ function App() {
         <Route path="department-type/edit/:id"  element={<EditDepartmentType/>}/>
         <Route path="department-type/view/:id"  element={<ViewDepartmentType/>}/>
         <Route path="department-type"  element={<DepartmentTypes/>}/>
+        
         <Route path="department/create"  element={<CreateDepartment/>}/>
         <Route path="designation/create"  element={<CreateDesignation/>}/>
         <Route path="base-pay/create"  element={<CreateBasicPay/>}/>

@@ -5,17 +5,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
 import { useEffect, useState } from "react";
-import { useCreateEmployeeTypeMutation } from "../../redux/services/employeeTypeService";
+import { useCreateDeductionMutation } from "../../redux/services/deductionService";
 // Validation schema using Yup
 const schema = yup.object().shape({
-  name: yup.string().required("Employee Type  is required"),
+  name: yup.string().required("Deduction  is required"),
   description: yup.string().required("description  is required"),
+  amount: yup.number().required("Amount  is required").typeError("Amount  is required"),
+  isRepetitive: yup.boolean().default(false),
 });
-const CreateEmployeeType = () => {
+const CreateDeduction = () => {
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
-  const [CreateEmployeeType, { isLoading, isError, isSuccess }] =
-    useCreateEmployeeTypeMutation();
+  const [CreateDeduction, { isLoading, isError, isSuccess }] =
+    useCreateDeductionMutation();
   const {
     register,
     handleSubmit,
@@ -26,10 +28,12 @@ const CreateEmployeeType = () => {
   });
   
   const onSubmit = async (data) => {
-    await CreateEmployeeType(data);
+    await CreateDeduction(data);
      reset({
       name: '',
-      description: ''
+      description: '',
+      amount: '',
+      isRepetitive: false
     });
   };
   // isSuccess = false
@@ -46,14 +50,14 @@ const CreateEmployeeType = () => {
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center">
             <PlusIcon className="size-5 inline-block mr-2" />
-            <span> Add Employee type</span>
+            <span> Add Deduction</span>
           </div>
         </div>
         {
           showAlert && isSuccess &&  (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
               <p className="font-bold">Success</p>
-              <p>Employee type  created successfully</p>
+              <p>Deduction created successfully</p>
               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
                 <XIcon />
               </button>
@@ -74,13 +78,13 @@ const CreateEmployeeType = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-              Employee type
+               Deduction Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Employee type"
+              placeholder="Deduction Name"
               {...register("name")}
             />
             {errors.name && (
@@ -106,6 +110,28 @@ const CreateEmployeeType = () => {
               </p>
             )}
           </div>
+           <div className="w-full">
+            <label className="block  mb-1" htmlFor="amount">
+              Amount
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="amount"
+              type="text"
+              placeholder="Amount"
+              {...register("amount")}
+            />
+            {errors.amount && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.amount.message}
+              </p>
+            )}
+          </div>
+            <div className="flex items-center mb-4">
+                <input               {...register("isRepetitive")}
+  id="default-checkbox" type="checkbox" value="" className="size-6  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 "/>
+                <label htmlFor="default-checkbox" className="ms-2  font-medium  ">Is Repetitive</label>
+            </div>
           <div className="flex justify-between">
             <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
               <ArrowLeft className="mr-1" />
@@ -114,7 +140,7 @@ const CreateEmployeeType = () => {
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}
-              className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
+              className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
             >
               {!isLoading ? (
                 "Create"
@@ -129,4 +155,4 @@ const CreateEmployeeType = () => {
   );
 };
 
-export default CreateEmployeeType;
+export default CreateDeduction;

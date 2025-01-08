@@ -1,11 +1,15 @@
-import { ArrowLeft, CreditCard, CreditCardIcon, IdCardIcon, Info, Loader, LocateFixedIcon, LocateIcon, LocateOffIcon, LucideBanknote, PiggyBank, Users, XIcon } from "lucide-react";
+import { ArrowLeft, CreditCardIcon, IdCardIcon, Info, Loader, LoaderCircleIcon, LocateFixedIcon, Users, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
 import { useEffect, useState } from "react";
-import { useCreateDesignationMutation } from "../../redux/services/designationService";
+import {  useGetAllDesignationQuery } from "../../redux/services/designationService";
+import { useGetAllDepartmentsQuery } from "../../redux/services/departmentService";
+import { useGetAllBasePaysQuery } from "../../redux/services/basicPaysService";
+import { useGetAllEmployeeTypeQuery } from "../../redux/services/employeeTypeService";
+import { useCreateEmployeeMutation } from "../../redux/services/employeeService";
 // Validation schema using Yup
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
@@ -13,16 +17,17 @@ const schema = yup.object().shape({
     .string()
     .matches(/^\d+$/, "CNIC must be a number")
     .required("CNIC is required"),
-  dOB: yup.date().required("Date of Birth is required"),
+  dOB: yup.date().required("Date of Birth is required").typeError("Invalid date formate"),
   fatherNameOrHusbandName: yup
     .string()
     .required("Father or Husband Name is required"),
+  email: yup.string().email("invalid email").required("email is required"),
   gender: yup.string().required("Gender is required"),
   religion: yup.string().required("Religion is required"),
   bloodGroup: yup.string().required("Blood Group is required"),
-  joiningDate: yup.date().required("Joining Date is required"),
-  ntn: yup.string().required("NTN is required"),
-  employmentTypeEId: yup.number().required("Employment Type ID is required"),
+  joiningDate: yup.date().required("Joining Date is required").typeError("Invalid date formate"),
+  qualification: yup.string().required("Qualification is required"),
+  employmentTypeEId: yup.number().required("Employment Type ID is required").typeError("Employment type is required"),
   domicile: yup.string().required("Domicile is required"),
   province: yup.string().required("Province is required"),
   district: yup.string().required("District is required"),
@@ -31,41 +36,48 @@ const schema = yup.object().shape({
     .string()
     .matches(/^\d+$/, "Contact Number must be a number")
     .required("Contact Number is required"),
-  basicPayScaleId: yup.number().required("Basic Pay Scale ID is required"),
-  departmentId: yup.number().required("Department ID is required"),
-  designationId: yup.number().required("Designation ID is required"),
-  employeeTypeId: yup.number().required("Employee Type ID is required"),
- bankName: yup.string().required("Bank Name is required"),
+  basicPayScaleId: yup.number().required("Basic Pay Scale  is required").typeError("Basic pay is required"),
+  departmentId: yup.number().required("Department  is required").typeError("Department is required"),
+  designationId: yup.number().required("Designation  is required").typeError("Designation is required"),
+  employeeTypeId: yup.number().required("Employee Type  is required").typeError("Employee type is required"),
+  bankName: yup.string().required("Bank Name is required"),
   branchName: yup.string().required("Branch Name is required"),
   branchCode: yup.number().required("Branch Code is required"),
   accountNumber: yup.string().required("Account Number is required"),
+  branchAddress: yup.string().required("Branch Address is required"),
 });
 const CreateEmployee = () => {
   const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
-  const [CreateDesignation, { isLoading, isError, isSuccess }] =
-    useCreateDesignationMutation();
+  const [CreateEmployee, { isLoading, isError, isSuccess }] =
+    useCreateEmployeeMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  // 
+  const { data : designationData, isLoading: designationIsLoading } = useGetAllDesignationQuery();
+  const { data : departmentData, isLoading: departmentIsLoading } = useGetAllDepartmentsQuery();
+  const { data : payScaleData, isLoading: payScaleIsLoading } = useGetAllBasePaysQuery()
+  const { data : employeeTypeData, isLoading: employeeTypeIsLoading } = useGetAllEmployeeTypeQuery()
+
+
   const onSubmit = async (data) => {
-    await CreateDesignation(data);
-    reset({
-      name: "",
-      description: "",
-    });
+    data.joiningDate = data.joiningDate.toISOString().split('T')[0];
+    data.dOB = data.dOB.toISOString().split('T')[0];
+    await CreateEmployee(data);
   };
   // isSuccess = false
   // isSuccess = true
 
   useEffect(() => {}, [isSuccess, isError, isLoading]);
   return (
+    !(designationIsLoading && departmentIsLoading && payScaleIsLoading && employeeTypeIsLoading) 
+    ?
     <div className="my-5 max-w-5xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
@@ -173,7 +185,7 @@ const CreateEmployee = () => {
               id="contactNo"
               type="text"
               placeholder="Contact Number"
-              {...register("Contact Number")}
+              {...register("contactNo")}
             />
             {errors.contactNo && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -192,9 +204,9 @@ const CreateEmployee = () => {
               placeholder="Email"
               {...register("email")}
             />
-            {errors.contactNo && (
+            {errors.email && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.contactNo.message}
+                {errors.email.message}
               </p>
             )}
           </div>
@@ -360,7 +372,7 @@ const CreateEmployee = () => {
               id="postaladdress"
               type="text"
               placeholder="PermanentAddress"
-              {...register("PermanentAddress")}
+              {...register("address")}
             />
             {errors.address && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -380,23 +392,29 @@ const CreateEmployee = () => {
          <div className="p-4">
              <div className="flex mb-4 bg-primary-2 shadow-lg rounded-lg py-3 px-2 text-white items-center">
             <Info className="size-5 inline-block mr-2" />
-            <span className="text-xl">Other Information</span>
+            <span className="text-xl">Employment Details</span>
         </div>
         <div className="grid grid-cols-3 gap-4">
-             <div className="w-full">
-            <label className="block  mb-1" htmlFor="Desigantion">
-              Desigantion
+              <div className="w-full">
+            <label className="block  mb-1" htmlFor="designation">
+              Designation
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="desigantion"
-              type="text"
-              placeholder="Desigantion"
-              {...register("Desigantion")}
-            />
-            {errors.ntn && (
+            <select
+              id="designation"
+              defaultValue=""
+              {...register("designationId")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Designation</option>
+              {
+                designationData?.map(( data, index) =>(
+                  <option key={index+data.name} value={data.id}>{data.name}</option>
+                ) )
+              }
+            </select>
+            {errors.designationId && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.ntn.message}
+                {errors.designationId.message}
               </p>
             )}
           </div>
@@ -407,96 +425,88 @@ const CreateEmployee = () => {
             <select
               id="Scale"
               defaultValue=""
-              {...register("Scale")}
+              {...register("basicPayScaleId")}
               className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              <option value="">Select Scale</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              
+                     <option value="">Select PayScale</option>
+
+        {
+               payScaleData?.map(( data, index) =>(
+                  <option key={index+data.payScaleName} value={data.id}>{data.payScaleName}</option>
+                ) )
+              }                         
             </select>
-            {errors.gender && (
+            {errors.basicPayScaleId && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.gender.message}
+                {errors.basicPayScaleId.message}
               </p>
             )}
           </div>
           <div className="w-full">
-            <label className="block  mb-1" htmlFor="religion">
-              Employement Type 
+            <label className="block  mb-1" htmlFor="employeeTypeId">
+              Employee Type 
             </label>
             <select
-              id="EmployementType"
+              id="employeeTypeId"
               defaultValue=""
-              {...register("EmployementType")}
+              {...register("employeeTypeId")}
               className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              <option value="">Select Employement Type </option>
-              <option value="Regular">Regular</option>
-              <option value="Contract">Contract</option>
-              <option value="Visitor">Visitor</option>
-              <option value="Fixed Contract">Fixed Contract</option>
+              <option value="">Select Employment Type </option>
+             {
+                employeeTypeData?.map(( data, index) =>(
+                  <option key={index+data.name} value={data.id}>{data.name}</option>
+                ) )
+              }
             </select>
-            {errors.gender && (
+            {errors.employeeTypeId && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.gender.message}
+                {errors.employeeTypeId.message}
               </p>
             )}
           </div>
           <div className="w-full">
-            <label className="block  mb-1" htmlFor="rEmployee Category">
-              Employee Category
+            <label className="block  mb-1" htmlFor="employmentTypeEId">
+              Employment Type
             </label>
             <select
-              id="EmployeeCategory"
+              id="employmentTypeEId"
               defaultValue=""
-              {...register("EmployeeCategory")}
+              {...register("employmentTypeEId")}
               className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              <option value="">Select Employee Category </option>
-              <option value="Teacher">Teacher</option>
-              <option value="Officer">Officer</option>
-              <option value="Staff">Staff</option>
+              <option  defaultValue={''}>Select Employment Type</option>
+              <option value={1}>Permanent</option>
+              <option value={2}>Adhoc</option>
+              <option value={3}>Contract</option>
+              <option value={4}>Fixed</option>
             </select>
-            {errors.gender && (
+            {errors.employmentTypeEId && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.gender.message}
+                {errors.employmentTypeEId.message}
               </p>
             )}
           </div>
-          <div className="w-full">
-            <label className="block  mb-1" htmlFor="Qualification">
-            Qualification
+            <div className="w-full">
+            <label className="block  mb-1" htmlFor="departmentId">
+              Department
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="Qualification"
-              type="text"
-              placeholder="Qualification"
-              {...register("Qualification")}
-            />
-            {errors.ntn && (
+            <select
+              id="departmentId"
+              defaultValue=""
+              {...register("departmentId")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Department</option>{
+                departmentData?.map(( data, index) =>(
+                  <option key={index+data.name} value={data.id}>{data.name}</option>
+                ) )
+              }
+             
+            </select>
+            {errors.departmentId && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.ntn.message}
+                {errors.departmentId.message}
               </p>
             )}
           </div>
@@ -517,6 +527,23 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
+           <div className="w-full col-span-3">
+            <label className="block  mb-1" htmlFor="Qualification">
+            Qualification
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="qualification"
+              type="text"
+              placeholder="Qualification"
+              {...register("qualification")}
+            />
+            {errors.qualification && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.qualification.message}
+              </p>
+            )}
+          </div>
         </div>
         </div>
        
@@ -532,15 +559,15 @@ const CreateEmployee = () => {
         </div>
        <div className="grid grid-cols-3 gap-4">
        <div className="w-full">
-            <label className="block  mb-1" htmlFor="Bank Name">
+            <label className="block  mb-1" htmlFor="bankName">
               Bank Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="bankname"
+              id="bankName"
               type="text"
               placeholder="Bank Name"
-              {...register("Bank Name")}
+              {...register("bankName")}
             />
             {errors.bankName && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -548,25 +575,42 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
-          <div className="w-full">
-            <label className="block  mb-1" htmlFor="Branch Address">
-              Branch Address
+           <div className="w-full">
+            <label className="block  mb-1" htmlFor="branchName">
+              Branch Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="branchname"
+              id="branchName"
               type="text"
-              placeholder="Branch Address"
-              {...register("Branch Address")}
+              placeholder="Branch Name"
+              {...register("branchName")}
             />
-            {errors.address && (
+            {errors.branchName && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.address.message}
+                {errors.branchName.message}
               </p>
             )}
           </div>
           <div className="w-full">
-            <label className="block  mb-1" htmlFor="Bank Name">
+            <label className="block  mb-1" htmlFor="branchAddress">
+              Branch Address
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="branchAddress"
+              type="text"
+              placeholder="Branch Address"
+              {...register("branchAddress")}
+            />
+            {errors.branchAddress && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.branchAddress.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="branchcode">
               Branch Code
             </label>
             <input
@@ -574,7 +618,7 @@ const CreateEmployee = () => {
               id="branchcode"
               type="text"
               placeholder="Branch Code"
-              {...register("fatherNameOrHusbandName")}
+              {...register("branchCode")}
             />
             {errors.branchCode && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -582,16 +626,16 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
-          <div className="w-full">
-            <label className="block  mb-1" htmlFor="Bank Name">
+          <div className="col-span-3">
+            <label className="block  mb-1" htmlFor="accountNo">
               Account Number
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="Acc no"
+              id="accountNo"
               type="text"
               placeholder="Account Number"
-              {...register("fatherNameOrHusbandName")}
+              {...register("accountNumber")}
             />
             {errors.accountNumber && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -628,6 +672,10 @@ const CreateEmployee = () => {
           </button>
         </div>
       </div>
+    </div>
+    :
+      <div className='w-full h-full'>
+        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
     </div>
   );
 };

@@ -41,13 +41,22 @@ export const employeeService = createApi({
     }),
 
     getAllEmployees: builder.query({
-      query: () => `employees`,
+      query: (id) => {
+    const link = id === undefined ? "employees" : `employees?id=${id}`;
+        return {
+          url: link,
+        }
+      },
       providesTags: ['employee']
     }),
     getEmployeeById: builder.query({
-      query: (id) => `employees/${id}`, // Use a template literal to insert the id
+      query: (id) => `employees/${id}`, 
       providesTags: ['employee']
-    })
+    }),
+      employeeAllowances: builder.query({
+      query: (id) => `employees/${id}`, 
+      providesTags: ['employee']
+    }),    
   }),
 })
 

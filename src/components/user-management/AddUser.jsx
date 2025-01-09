@@ -63,7 +63,7 @@ export const AddUser = () => {
             {errors.fullName && <p className="text-red-500 text-xs italic mt-1">{errors.fullName.message}</p>}
             </div>
             <div className="w-full">
-            <label className="block  mb-1" htmlFor="CNIC">
+            <label className="block  mb-1" htmlFor="CNIC Number">
               CNIC Number
             </label>
             <input

@@ -626,7 +626,7 @@ const CreateEmployee = () => {
               </p>
             )}
           </div>
-          <div className="w-full">
+          <div className="w-fu">
             <label className="block  mb-1" htmlFor="accountNo">
               Account Number
             </label>

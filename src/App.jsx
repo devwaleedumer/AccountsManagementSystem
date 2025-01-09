@@ -28,6 +28,7 @@ import ManageAdhocEmployeeSalary from "./components/manage-employee-salary/Manag
 import AdhocEmployeeSalary from "./components/employee-salary/AdhocEmployeeSalary"
 import ContractEmployeeSalary from "./components/employee-salary/ContractEmployeeSalary"
 import FixedEmployeeSalary from "./components/employee-salary/FixedEmployeeSalary"
+import ViewEmpDetails from "./components/employee/ViewEmpDetails"
 function App() {
 
   return (
@@ -57,12 +58,16 @@ function App() {
         <Route path="base-pay/create"  element={<CreateBasicPay/>}/>
         <Route path="employees/create"  element={<CreateEmployee/>}/>
         <Route path="employees"  element={<Employees/>}/>
+        <Route path="employees/view-emp-details"  element={<ViewEmpDetails/>}/>
+
+
         <Route path="salary/permanent-employee-salary/manage-permanent-employee-salary/:id"  element={<ManagePermanentEmployeeSalary/>}/>
         <Route path="salary/adhoc-employee-salary/manage-adhoc-employee-salary/:id"  element={<ManageAdhocEmployeeSalary/>}/>
         <Route path="salary/permanent-employee-salary"  element={<PermanentEmployeeSalary/>}/>
         <Route path="salary/adhoc-employee-salary"  element={<AdhocEmployeeSalary/>}/>
         <Route path="salary/contract-employee-salary"  element={<ContractEmployeeSalary/>}/>
         <Route path="salary/fixed-employee-salary"  element={<FixedEmployeeSalary/>}/>
+      
         <Route path="deduction/create"  element={<CreateDeduction/>}/>
         <Route path="allowance/create"  element={<CreateAllowance/>}/>
         <Route path="employee-type/create"  element={<CreateEmployeeType/>}/>

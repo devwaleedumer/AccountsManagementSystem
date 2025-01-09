@@ -56,15 +56,62 @@ export const AddUser = () => {
         <p className="text-red-500 text-xs italic my-2">{isError ? "Invalid credentials" : ""}</p>
           <div className="space-y-4 p-6">
              <div className="w-full">
-            <label className="block  mb-1" htmlFor="name">
+            <label className="block  mb-1" htmlFor="fullName">
              Full Name
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="email" type="name" placeholder="Username" {...register("fullName")}/>
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="fullName" type="name" placeholder="FullName" {...register("fullName")}/>
             {errors.fullName && <p className="text-red-500 text-xs italic mt-1">{errors.fullName.message}</p>}
             </div>
+            <div className="w-full">
+            <label className="block  mb-1" htmlFor="CNIC">
+              CNIC Number
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="CNIC"
+              type="text"
+              placeholder="CNIC Number"
+              {...register("cNIC")}
+            />
+            {errors.cNIC && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.cNIC.message}
+              </p>
+            )}
+          </div>
+            
+            <div className="w-full">
+            <label className="block  mb-1" htmlFor="name">
+             Phone Number
+            </label>
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="phone number" type="name" placeholder="Phone Number" {...register("fullName")}/>
+            {errors.fullName && <p className="text-red-500 text-xs italic mt-1">{errors.fullName.message}</p>}
+            </div>
+            <div className="w-full">
+            <label className="block  mb-1" htmlFor="religion">
+              Role
+            </label>
+            <select
+              id="role"
+              defaultValue=""
+              {...register("role")}
+              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              <option value="">Select Role</option>
+              <option value="Admin">Admin</option>
+              <option value="Auditor">Auditor</option>
+              <option value="Salary Incharge">Salary Incharge</option>
+              <option value="Data Entry Operator">Data Entry Operator</option>
+            </select>
+            {errors.religion && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.religion.message}
+              </p>
+            )}
+          </div>
              <div className="w-full">
             <label className="block  mb-1" htmlFor="email">
-                  Email
+                  E-Mail Address
             </label>
             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="email" type="email" placeholder="Email" {...register("email")}/>
             {errors.email && <p className="text-red-500 text-xs italic mt-1">{errors.email.message}</p>}

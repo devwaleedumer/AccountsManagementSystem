@@ -625,19 +625,19 @@ const CreateEmployee = () => {
         </div>
        <div className="grid grid-cols-3 gap-4">
        <div className="w-full">
-            <label className="block  mb-1" htmlFor="bankName">
-              Bank Name
+            <label className="block  mb-1" htmlFor="branchName">
+              Branch Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="bankName"
+              id="branchName"
               type="text"
-              placeholder="Bank Name"
-              {...register("bankName")}
+              placeholder="Brach Name"
+              {...register("branchName")}
             />
-            {errors.bankName && (
+            {errors.branchName && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.bankName.message}
+                {errors.branchName.message}
               </p>
             )}
           </div>

@@ -43,6 +43,7 @@ import EmployeeTypes from "./components/employee-type/EmployeeTypes"
 import EditEmployeeType from "./components/employee-type/EditEmployeeType"
 import Home from "./components/Home"
 import ForgotPassword from "./pages/ForgetPassword"
+import EditEmployee from "./components/employee/EditEmployee"
 function App() {
 
   return (
@@ -79,8 +80,9 @@ function App() {
         <Route path="base-pay"  element={<BasicPays/>}/>
         
         <Route path="employees/create"  element={<CreateEmployee/>}/>
+        <Route path="employees/edit/:id"  element={<EditEmployee/>}/>
         <Route path="employees"  element={<Employees/>}/>
-        <Route path="employees/view-emp-details"  element={<ViewEmpDetails/>}/>
+        <Route path="employees/view/:id"  element={<ViewEmpDetails/>}/>
 
 
         <Route path="salary/permanent-employee-salary/manage-permanent-employee-salary/:id"  element={<ManagePermanentEmployeeSalary/>}/>

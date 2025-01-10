@@ -22,8 +22,16 @@ const schema = yup.object().shape({
     .required("CNIC is required")
     .min(13, "13 digits required"),
   dOB: yup.date().required("Date of Birth is required").typeError("Invalid date formate"),
-  contractFrom: yup.date().typeError("Invalid date formate"),
-  contractTo: yup.date().typeError("Invalid date formate"),
+ contractFrom: yup.date()
+    .nullable()
+    .typeError("Invalid date") // Custom error for invalid dates
+    .transform((value, originalValue) => (originalValue === "" ? null : value)) // Handle empty strings
+    , // You can remove this if the date is optional,
+  contractTo: yup.date()
+    .nullable()
+    .typeError("Invalid date") // Custom error for invalid dates
+    .transform((value, originalValue) => (originalValue === "" ? null : value)) // Handle empty strings
+    , // You can remove this if the date is optional,
   fatherNameOrHusbandName: yup
     .string()
     .required("Father or Husband Name is required"),
@@ -79,8 +87,7 @@ const CreateEmployee = () => {
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onChange"
-    
+    mode: "onChange",
   });
 
   // 
@@ -91,9 +98,9 @@ const CreateEmployee = () => {
   const employmentType =  watch("employmentTypeEId","")
 
   const onSubmit = async (data) => {
-    data.joiningDate = data.joiningDate.toISOString().split('T')[0];
-    data.contractFrom = data.contractFrom.toISOString().split('T')[0];
-    data.contractTo = data.contractTo.toISOString().split('T')[0];
+    data.joiningDate =   data.joiningDate.toISOString().split('T')[0];
+    data.contractFrom =data.contractFrom == null ? null : data.contractFrom.toISOString().split('T')[0] ;
+    data.contractTo =data.contractTo == null ? null : data.contractTo.toISOString().split('T')[0] ;
     data.dOB = data.dOB.toISOString().split('T')[0];
     await CreateEmployee(data);
   };

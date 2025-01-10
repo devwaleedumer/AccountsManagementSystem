@@ -85,5 +85,5 @@ export const {
   useDeleteEmployeeMutation,
   useGetAllEmployeesByWithDeductionsAndAllowancesQuery,
   useGenerateAdhocEmployeesSalaryMutation,
-  getEmployeeByIdAllDetails
+  useGetEmployeeByIdAllDetailsQuery
   } = employeeService;

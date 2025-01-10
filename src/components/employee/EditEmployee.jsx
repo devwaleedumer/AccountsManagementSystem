@@ -9,9 +9,11 @@ import {  useGetAllDesignationQuery } from "../../redux/services/designationServ
 import { useGetAllDepartmentsQuery } from "../../redux/services/departmentService";
 import { useGetAllBasePaysQuery } from "../../redux/services/basicPaysService";
 import { useGetAllEmployeeTypeQuery } from "../../redux/services/employeeTypeService";
-import { useEditEmployeeMutation } from "../../redux/services/employeeService";
+import { useEditEmployeeMutation, useGetEmployeeByIdAllDetailsQuery } from "../../redux/services/employeeService";
+import { useParams } from "react-router-dom";
 // Validation schema using Yup
 const schema = yup.object().shape({
+  id: yup.number().nullable(),
   fullName: yup.string().required("Full Name is required").matches(
         /^[A-Za-z\s]+$/,
         "Must contain only letters "
@@ -22,8 +24,8 @@ const schema = yup.object().shape({
     .required("CNIC is required")
     .min(13, "13 digits required"),
   dOB: yup.date().required("Date of Birth is required").typeError("Invalid date formate"),
-  contractFrom: yup.date().typeError("Invalid date formate"),
-  contractTo: yup.date().typeError("Invalid date formate"),
+  contractFrom: yup.date().nullable(),
+  contractTo: yup.date().nullable,
   fatherNameOrHusbandName: yup
     .string()
     .required("Father or Husband Name is required"),
@@ -67,11 +69,13 @@ const schema = yup.object().shape({
   accountNumber: yup.string().required("Account Number is required"),
   branchAddress: yup.string().required("Branch Address is required"),
 });
-const CreateEmployee = () => {
+const EditEmployee = () => {
+  const {id} = useParams()
   const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
   const [CreateEmployee, { isLoading, isError, isSuccess }] =
     useEditEmployeeMutation();
+  const {isLoading: empLoyeeIsLoading, data: employeeData} = useGetEmployeeByIdAllDetailsQuery(id);
   const {
     register,
     handleSubmit,
@@ -79,8 +83,8 @@ const CreateEmployee = () => {
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onChange"
-    
+    mode: "onChange",
+    values: employeeData
   });
 
   // 
@@ -92,8 +96,8 @@ const CreateEmployee = () => {
 
   const onSubmit = async (data) => {
     data.joiningDate = data.joiningDate.toISOString().split('T')[0];
-    data.contractFrom = data.contractFrom.toISOString().split('T')[0];
-    data.contractTo = data.contractTo.toISOString().split('T')[0];
+    data.contractFrom = data.contractFrom !== "" ?  data.contractFrom.toISOString().split('T')[0] : null;
+    data.contractTo = data.contractTo !== "" ?  data.contractTo.toISOString().split('T')[0] : null;
     data.dOB = data.dOB.toISOString().split('T')[0];
     await CreateEmployee(data);
   };
@@ -102,7 +106,7 @@ const CreateEmployee = () => {
 
   useEffect(() => {}, [isSuccess, isError, isLoading]);
   return (
-    !(designationIsLoading && departmentIsLoading && payScaleIsLoading && employeeTypeIsLoading) 
+    !(designationIsLoading && departmentIsLoading && payScaleIsLoading && employeeTypeIsLoading && empLoyeeIsLoading) 
     ?
     <div className="my-5 max-w-5xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
@@ -625,19 +629,19 @@ const CreateEmployee = () => {
         </div>
        <div className="grid grid-cols-3 gap-4">
        <div className="w-full">
-            <label className="block  mb-1" htmlFor="bankName">
-              Bank Name
+            <label className="block  mb-1" htmlFor="branchName">
+              Branch Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="bankName"
+              id="branchName"
               type="text"
-              placeholder="Bank Name"
-              {...register("bankName")}
+              placeholder="Branch Name"
+              {...register("branchName")}
             />
-            {errors.bankName && (
+            {errors.branchName && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.bankName.message}
+                {errors.branchName.message}
               </p>
             )}
           </div>
@@ -766,4 +770,4 @@ const CreateEmployee = () => {
   );
 };
 
-export default CreateEmployee;
+export default EditEmployee;

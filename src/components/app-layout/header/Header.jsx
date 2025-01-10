@@ -30,7 +30,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
    <div className=" flex gap-4 text-primary-foreground items-center">
      {
-      location.pathname != "/ams" || location.pathname != "/ams/"  && <ArrowLeft className="cursor-pointer size-10" onClick={() => onClickBack()}/>
+     ( location.pathname != "/ams" && location.pathname != "/ams/")  && <ArrowLeft className="cursor-pointer size-10" onClick={() => onClickBack()}/>
      }
      <h1 className=" font-semibold   text-4xl"> FUUAST AMS</h1>
      </div>         

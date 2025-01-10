@@ -1,4 +1,4 @@
-import { ArrowLeft, Loader, PlusIcon, XIcon } from "lucide-react";
+import {  Loader, PlusIcon, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -107,10 +107,6 @@ const CreateBasicPay = () => {
             )}
           </div>
           <div className="flex justify-between">
-            <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
-              <ArrowLeft className="mr-1" />
-              Back
-            </button>
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}

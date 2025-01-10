@@ -55,8 +55,11 @@ export const deductionService = createApi({
     getAllEmployeeDeduction : builder.query({
        query: (id) => `deductions/employee/${id}`, 
       providesTags: ['deduction']
-    })
-    ,
+    }),
+    getAllEmployeeDeductionAndAllowance : builder.query({
+       query: () => `deductions/allowances-deductions`, 
+      providesTags: ['deduction']
+    }),
      createEmployeeDeduction : builder.mutation({
        query: ({allowanceId,employeeId}) => 
        {
@@ -92,5 +95,6 @@ export const {
   useEmployeeDeductionsQuery,
   useGetAllEmployeeDeductionQuery,
   useCreateEmployeeDeductionMutation,
-  useDeleteEmployeeDeductionMutation
+  useDeleteEmployeeDeductionMutation,
+  useGetAllEmployeeDeductionAndAllowanceQuery
   } = deductionService;

@@ -29,6 +29,19 @@ import AdhocEmployeeSalary from "./components/employee-salary/AdhocEmployeeSalar
 import ContractEmployeeSalary from "./components/employee-salary/ContractEmployeeSalary"
 import FixedEmployeeSalary from "./components/employee-salary/FixedEmployeeSalary"
 import ViewEmpDetails from "./components/employee/ViewEmpDetails"
+import BasicPays from "./components/basicPay/BasicPays"
+import EditBasicPay from "./components/basicPay/EditBasicPay"
+import Departments from "./components/department/Departments"
+import EditDepartment from "./components/department/EditDepartment"
+import Allowances from "./components/allowances/Allowances"
+import EditAllowance from "./components/allowances/EditAllowance"
+import Deductions from "./components/deductions/Deductions"
+import EditDeduction from "./components/deductions/EditDeduction"
+import Designations from "./components/designation/Designations"
+import EditDesignation from "./components/designation/EditDesignation"
+import EmployeeTypes from "./components/employee-type/EmployeeTypes"
+import EditEmployeeType from "./components/employee-type/EditEmployeeType"
+import Home from "./components/Home"
 function App() {
 
   return (
@@ -37,7 +50,7 @@ function App() {
        <BrowserRouter>
       <Routes>
         <Route  path="/ams"  element={<Layout/>}>
-           <Route  index element={<h1>Home</h1>}/>  
+           <Route  index element={<Home/>}/>  
           <Route  path="users" element={<UserList/>}/> 
           <Route  path="users/view-user" element={<ViewUser/>}/> 
           <Route  path="users/add-user" element={<AddUser/>}/> 
@@ -51,11 +64,19 @@ function App() {
         <Route path="department-type/create"  element={<CreateDepartmentType/>}/>
         <Route path="department-type/edit/:id"  element={<EditDepartmentType/>}/>
         <Route path="department-type/view/:id"  element={<ViewDepartmentType/>}/>
-        <Route path="department-type"  element={<DepartmentTypes/>}/>
         
-        <Route path="department/create"  element={<CreateDepartment/>}/>
+        <Route path="departments/create"  element={<CreateDepartment/>}/>
+        <Route path="departments/edit/:id"  element={<EditDepartment/>}/>
+        <Route path="departments"  element={<Departments/>}/>
+
         <Route path="designation/create"  element={<CreateDesignation/>}/>
+        <Route path="designation/edit/:id"  element={<EditDesignation/>}/>
+        <Route path="designation"  element={<Designations/>}/>
+        
         <Route path="base-pay/create"  element={<CreateBasicPay/>}/>
+        <Route path="base-pay/edit/:id"  element={<EditBasicPay/>}/>
+        <Route path="base-pay"  element={<BasicPays/>}/>
+        
         <Route path="employees/create"  element={<CreateEmployee/>}/>
         <Route path="employees"  element={<Employees/>}/>
         <Route path="employees/view-emp-details"  element={<ViewEmpDetails/>}/>
@@ -69,8 +90,14 @@ function App() {
         <Route path="salary/fixed-employee-salary"  element={<FixedEmployeeSalary/>}/>
       
         <Route path="deduction/create"  element={<CreateDeduction/>}/>
+        <Route path="deduction/edit/:id"  element={<EditDeduction/>}/>
+        <Route path="deduction"  element={<Deductions/>}/>
         <Route path="allowance/create"  element={<CreateAllowance/>}/>
+        <Route path="allowance"  element={<Allowances/>}/>
+        <Route path="allowance/edit/:id"  element={<EditAllowance/>}/>
         <Route path="employee-type/create"  element={<CreateEmployeeType/>}/>
+        <Route path="employee-type"  element={<EmployeeTypes/>}/>
+        <Route path="employee-type/edit/:id"  element={<EditEmployeeType/>}/>
         </Route>
         <Route path="/login"  element={<Login/>}/>
          

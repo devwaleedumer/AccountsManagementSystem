@@ -22,7 +22,7 @@ export const basePayService = createApi({
     editBasePay: builder.mutation({
       query: (data) => {
         return {
-          url: `basicPays`,
+          url: `basicPays/${data.id}`,
           method: 'put',
           body:data,
         }

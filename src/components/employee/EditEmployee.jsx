@@ -9,7 +9,7 @@ import {  useGetAllDesignationQuery } from "../../redux/services/designationServ
 import { useGetAllDepartmentsQuery } from "../../redux/services/departmentService";
 import { useGetAllBasePaysQuery } from "../../redux/services/basicPaysService";
 import { useGetAllEmployeeTypeQuery } from "../../redux/services/employeeTypeService";
-import { useCreateEmployeeMutation } from "../../redux/services/employeeService";
+import { useEditEmployeeMutation } from "../../redux/services/employeeService";
 // Validation schema using Yup
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required").matches(
@@ -71,7 +71,7 @@ const CreateEmployee = () => {
   const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
   const [CreateEmployee, { isLoading, isError, isSuccess }] =
-    useCreateEmployeeMutation();
+    useEditEmployeeMutation();
   const {
     register,
     handleSubmit,
@@ -751,7 +751,7 @@ const CreateEmployee = () => {
             className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
           >
             {!isLoading ? (
-              "Create"
+              "Update"
             ) : (
               <Loader className="size-5 text-center animate-spin" />
             )}

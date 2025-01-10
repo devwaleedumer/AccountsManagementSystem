@@ -1,24 +1,26 @@
-import { ArrowLeft, Loader, LoaderCircleIcon, PlusIcon, XIcon } from "lucide-react";
+import { Loader, LoaderCircleIcon, PlusIcon, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
 import { useEffect, useState } from "react";
-import { useCreateDepartmentMutation } from "../../redux/services/departmentService";
-import { useGetAllDepartmentTypesQuery } from "../../redux/services/departmentTypeService";
+import {  useEditAllowanceMutation, useGetAllowanceByIdQuery } from "../../redux/services/allowanceService";
+import { useParams } from "react-router-dom";
 // Validation schema using Yup
 const schema = yup.object().shape({
-  name: yup.string().required("Department Type name  is required"),
+  name: yup.string().required("Deduction  is required"),
   description: yup.string().required("description  is required"),
-  departmentTypeId: yup.number().required("Department Type is required")
-      .typeError("Please select a valid department type"), // Ensures a valid number is selected
+  amount: yup.number().required("Amount  is required").typeError("Amount  is required"),
+  isRepetitive: yup.boolean().default(false),
 });
-const CreateDepartment = () => {
+const EditAllowance = () => {
+  const {id} = useParams()
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
-  const [CreateDepartmentType, { isLoading, isError, isSuccess }] =
-    useCreateDepartmentMutation();
+  const [CreateAllowance, { isLoading, isError, isSuccess }] =
+    useEditAllowanceMutation();
+    const { isLoading: allowanceIsLoading, data: allowanceData  } = useGetAllowanceByIdQuery(id);
   const {
     register,
     handleSubmit,
@@ -26,17 +28,16 @@ const CreateDepartment = () => {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
+    values:allowanceData
   });
-
-  const {isLoading:departmentTypeLoading, data} = useGetAllDepartmentTypesQuery();
   
   const onSubmit = async (data) => {
-    data.departmentTypeId = parseInt(data.departmentTypeId);
-    await CreateDepartmentType(data);
+    await CreateAllowance(data);
      reset({
       name: '',
       description: '',
-      departmentTypeId: ''
+      amount: '',
+      isRepetitive:false
     });
   };
   // isSuccess = false
@@ -47,21 +48,25 @@ const CreateDepartment = () => {
   
   },
   [isSuccess,isError,isLoading])
-  return ( 
-    !departmentTypeLoading ?
+  return (
+    allowanceIsLoading ?
+     <div className='w-full h-full'>
+        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
+    </div>
+    :
     <div className="my-5 max-w-xl  bg-white  mx-auto border shadow-lg rounded-lg font-roboto ">
       <div className="bg-image">
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center">
             <PlusIcon className="size-5 inline-block mr-2" />
-            <span> Add Department</span>
+            <span> Update Allowance</span>
           </div>
         </div>
         {
           showAlert && isSuccess &&  (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
               <p className="font-bold">Success</p>
-              <p>Department  created successfully</p>
+              <p>Allowance Updated successfully</p>
               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
                 <XIcon />
               </button>
@@ -82,13 +87,13 @@ const CreateDepartment = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-              Department Name
+               Allowance Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Department  Name"
+              placeholder="Department Type Name"
               {...register("name")}
             />
             {errors.name && (
@@ -115,41 +120,34 @@ const CreateDepartment = () => {
             )}
           </div>
            <div className="w-full">
-            <label className="block  mb-1" htmlFor="departmentTypeId">
-              Department Type
+            <label className="block  mb-1" htmlFor="amount">
+              Amount
             </label>
-            <select  id="departmentTypeId"
-            defaultValue="" 
-          {...register("departmentTypeId")}
-            className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-><option value="" >Select Department Type</option>
-            {
-                data.map((item,index) =>(
-
-                <option value={item.id} key={index+item.name}>{item.name}</option>
-
-                ))
-            }
-
-            </select>
-            {errors.departmentTypeId && (
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="amount"
+              type="text"
+              placeholder="Amount"
+              {...register("amount")}
+            />
+            {errors.amount && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.departmentTypeId.message}
+                {errors.amount.message}
               </p>
             )}
           </div>
+            <div className="flex items-center mb-4">
+                <input {...register("isRepetitive")} id="default-checkbox" type="checkbox" value="" className="size-6  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 "/>
+                <label htmlFor="default-checkbox" className="ms-2  font-medium  ">Is Repetitive</label>
+            </div>
           <div className="flex justify-between">
-            <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
-              <ArrowLeft className="mr-1" />
-              Back
-            </button>
+          
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}
-              className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
-            >
+              className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center" >
               {!isLoading ? (
-                "Create"
+                "Update"
               ) : (
                 <Loader className="size-5 text-center animate-spin" />
               )}
@@ -158,11 +156,7 @@ const CreateDepartment = () => {
         </div>
       </div>
     </div>
-    :
-      <div className='w-full h-full'>
-        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
-    </div>
   );
 };
 
-export default CreateDepartment;
+export default EditAllowance;

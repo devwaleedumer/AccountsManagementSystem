@@ -1,13 +1,30 @@
-import { LoaderCircleIcon, LucideEye, PenSquareIcon, Trash2 } from 'lucide-react'
+import { LoaderCircleIcon, PenSquareIcon, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useDeleteEmployeeMutation, useGetAllEmployeesQuery } from '../../redux/services/employeeService'
+import { useEffect, useState } from 'react';
+import { useDeleteDepartmentMutation, useGetAllDepartmentsQuery } from '../../redux/services/departmentService';
 
-const Employees = () => {
-    const {isLoading, data} = useGetAllEmployeesQuery()
-    const [deleteEmployee,] = useDeleteEmployeeMutation();
+const Departments = () => {
+        const [filteredData, setFilteredData] = useState(null); // To store filtered data
+    const {isLoading, data} = useGetAllDepartmentsQuery()
+    const [deleteDepartment,] = useDeleteDepartmentMutation();
     const handleDelete = async(id) =>{
-       await deleteEmployee(id)
+       await deleteDepartment(id)
     }
+        useEffect(() => {
+            if (data) {
+                setFilteredData(data)
+            }
+        },[data])
+
+          // Function to handle the input change
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    // Filter the data based on the search query (case-insensitive)
+    const filtered = data.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered); // Update filtered data
+  };
 
   return (
     isLoading ?
@@ -28,7 +45,7 @@ const Employees = () => {
                                     <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring focus:ring-offset-2 focus:ring-primary focus:outline-none  block w-half px pl-10 p-2 " placeholder="Search" required=""/>
+                            <input onChange={handleSearchChange}  type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring focus:ring-offset-2 focus:ring-primary focus:outline-none  block w-half px pl-10 p-2 " placeholder="Search by Name" required=""/>
                         </div>
                     </form>
                 </div>
@@ -37,7 +54,7 @@ const Employees = () => {
                         <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
-                        Add Employee
+                        Add Department
                     </Link>
                     
                 </div>
@@ -49,80 +66,24 @@ const Employees = () => {
                 <th scope="col" className="px-6 py-3 border-r">
                     Id
                 </th>
-               
                 <th scope="col" className="px-6 py-3 border-r">
-                    Full Name
-                </th>
-                <th scope="col" className="px-6 py-3 border-r">
-                    CNIC
+                    Name
                 </th>
                 <th scope="col" className="px-6 py-3 border-r">
-                    Contact no.
-                </th>
-                <th scope="col" className="px-6 py-3 border-r">
-                    Scale
-                </th>
-                <th scope="col" className="px-6 py-3 border-r">
-                    Designation
-                </th>
-                <th scope="col" className="px-6 py-3 border-r">
-                    Department
-                </th>
-                
-                <th scope="col" className="px-6 py-3 border-r">
-                    Employment Type
-                </th>
-                 <th scope="col" className="px-6 py-3 border-r">
-                    Employee Type
-                </th>
-                <th scope="col" className="px-6 py-3 border-r">
-                    Contract From
-                </th>
-                 <th scope="col" className="px-6 py-3 border-r">
-                    Contract To
-                </th>
-                 <th scope="col" className="px-6 py-3 border-r">
-                    Actions
+                    Action
                 </th>
             </tr>
         </thead>
         <tbody>
           {
-            data.map((item,index) =>(
+            filteredData?.map((item,index) =>(
                   <tr className="bg-white border-b  hover:bg-gray-50" key={index+item.name}>
                  <td className="px-6 py-4">
                     {item.id}
                 </td>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                   {item.fullName}
+                   {item.name}
                 </th>
-                <td className="px-6 py-4">
-                    {item.cnic}
-                </td>
-                <td className="px-6 py-4">
-                    {item.contactNo}
-                </td>
-                <td className="px-6 py-4">
-                    {item.scale}
-                </td>
-                <td className="px-6 py-4">
-                    {item.designation}
-                </td>
-                <td className="px-6 py-4">
-                    {item.department}
-                </td>
-                <td className="px-6 py-4">
-                    {item.employmentType}
-                </td>
-                 <td className="px-6 py-4">
-                    {item.employeeType}
-                </td>
-                 <td className="px-6 py-4">
-                    {item.contractFrom == "" ? "-" : item.contractFrom}
-                </td>
-                 <td className="px-6 py-4">
-                    {item.contractTo == "" ? "-" : item.contractTo}
-                </td>
                 <td className="flex items-center px-6 py-4 space-x-2">
                    <Link to={`edit/${item.id}`} className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <PenSquareIcon className="size-5"/>
@@ -130,10 +91,9 @@ const Employees = () => {
                      <button onClick={() => handleDelete(item.id)}   className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <Trash2 className="size-5"/>
                    </button>
-                     <Link to={`view/${item.id}`} className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
+                     {/* <Link to={`view/${item.id}`} className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <LucideEye className="size-5"/>
-                   </Link>
-                   
+                   </Link> */}
                 </td>
             </tr>
             ) )
@@ -149,4 +109,4 @@ const Employees = () => {
   )
 }
 
-export default Employees
+export default Departments

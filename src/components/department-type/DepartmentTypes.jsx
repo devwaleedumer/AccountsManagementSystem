@@ -1,13 +1,30 @@
 import { LoaderCircleIcon, LucideEye, PenSquareIcon, Trash2 } from 'lucide-react'
 import { useDeleteDepartmentTypeMutation, useGetAllDepartmentTypesQuery } from '../../redux/services/departmentTypeService'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const DepartmentTypes = () => {
+        const [filteredData, setFilteredData] = useState(null); // To store filtered data
     const {isLoading, data} = useGetAllDepartmentTypesQuery()
     const [deleteDepartmentType,] = useDeleteDepartmentTypeMutation();
     const handleDelete = async(id) =>{
        await deleteDepartmentType(id)
     }
+        useEffect(() => {
+            if (data) {
+                setFilteredData(data)
+            }
+        },[data])
+
+          // Function to handle the input change
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    // Filter the data based on the search query (case-insensitive)
+    const filtered = data.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered); // Update filtered data
+  };
 
   return (
     isLoading ?
@@ -28,7 +45,7 @@ const DepartmentTypes = () => {
                                     <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring focus:ring-offset-2 focus:ring-primary focus:outline-none  block w-half px pl-10 p-2 " placeholder="Search" required=""/>
+                            <input onChange={handleSearchChange}  type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring focus:ring-offset-2 focus:ring-primary focus:outline-none  block w-half px pl-10 p-2 " placeholder="Search by Name" required=""/>
                         </div>
                     </form>
                 </div>
@@ -66,7 +83,7 @@ const DepartmentTypes = () => {
         </thead>
         <tbody>
           {
-            data.map((item,index) =>(
+            filteredData?.map((item,index) =>(
                   <tr className="bg-white border-b  hover:bg-gray-50" key={index+item.name}>
                  <td className="px-6 py-4">
                     {item.id}

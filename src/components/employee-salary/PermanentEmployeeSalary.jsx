@@ -1,11 +1,12 @@
-import { LoaderCircleIcon } from "lucide-react";
+import { CheckSquare, LoaderCircleIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useGetAllEmployeesQuery } from "../../redux/services/employeeService";
+import { useGetAllEmployeesByWithDeductionsAndAllowancesQuery } from "../../redux/services/employeeService";
 import { format } from 'date-fns';
+import { useGetAllEmployeeDeductionAndAllowanceQuery } from "../../redux/services/deductionService";
 const PermanentEmployeeSalary = () => {
-  const { isLoading, data } = useGetAllEmployeesQuery(1);
-
-  return isLoading ? (
+  const { isLoading, data } = useGetAllEmployeesByWithDeductionsAndAllowancesQuery(1);
+  const { isLoading: ADIsLoading,data: ADData} = useGetAllEmployeeDeductionAndAllowanceQuery()
+  return isLoading || ADIsLoading ? (
     <div className="w-full h-full">
       <LoaderCircleIcon className="animate-spin size-20 text-primary mx-auto mt-52" />
     </div>
@@ -55,7 +56,17 @@ const PermanentEmployeeSalary = () => {
                  <div className="text-black">
                 <strong>Salary Month:</strong> {format(new Date(),"MMMM, yyyy")}
               </div>
-              <Link
+             {
+              data.isPayRollGenerated ? 
+                <button
+                className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              >
+               <CheckSquare className="size-3.5 mr-2 font-bold"/>
+                PayRoll ALready Generated for This Month
+
+                </button>:
+                 <Link
+              
                 to={"create"}
                 className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
@@ -74,6 +85,7 @@ const PermanentEmployeeSalary = () => {
                 </svg>
                 Generate Payroll
               </Link>
+             }
             </div>
           </div>
           <div className="relative overflow-auto max-h-[600px]  shadow-md  w-full h-full font-roboto p-4">
@@ -83,15 +95,11 @@ const PermanentEmployeeSalary = () => {
                   <th scope="col" className="px-6 py-3 border-r">
                     Id
                   </th>
-
                   <th scope="col" className="px-6 py-3 border-r">
                     Full Name
                   </th>
                   <th scope="col" className="px-6 py-3 border-r">
                     CNIC
-                  </th>
-                  <th scope="col" className="px-6 py-3 border-r">
-                    Contact no.
                   </th>
                   <th scope="col" className="px-6 py-3 border-r">
                     Scale
@@ -102,25 +110,22 @@ const PermanentEmployeeSalary = () => {
                   <th scope="col" className="px-6 py-3 border-r">
                     Department
                   </th>
-
-                  <th scope="col" className="px-6 py-3 border-r">
-                    Employment Type
-                  </th>
-                  <th scope="col" className="px-6 py-3 border-r">
-                    Employee Type
-                  </th>
                   <th scope="col" className="px-6 py-3 border-r">
                     Actions
                   </th>
+                  {ADData.map((adData,index) => ( <th key={index} scope="col" className="px-6 py-3 border-r">
+                    {adData}
+                  </th>))}
+                            
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => (
+                {data.employees.map((item, index) => (
                   <tr
                     className="bg-white border-b  hover:bg-gray-50"
                     key={index + item.name}
                   >
-                    <td className="px-6 py-4">{item.id}</td>
+                    <td className="px-6 py-4">EMP-{item.id}</td>
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -128,12 +133,9 @@ const PermanentEmployeeSalary = () => {
                       {item.fullName}
                     </th>
                     <td className="px-6 py-4">{item.cnic}</td>
-                    <td className="px-6 py-4">{item.contactNo}</td>
                     <td className="px-6 py-4">{item.scale}</td>
                     <td className="px-6 py-4">{item.designation}</td>
                     <td className="px-6 py-4">{item.department}</td>
-                    <td className="px-6 py-4">{item.employmentType}</td>
-                    <td className="px-6 py-4">{item.employeeType}</td>
                     <td
                       className="flex items-center px-6 py-4 space-x-2"
                       rowSpan={2}
@@ -145,6 +147,25 @@ const PermanentEmployeeSalary = () => {
                         Manage
                       </Link>
                     </td>
+                    {
+                      item.allowances?.map((data,index) => {
+                        return data.amount != null ? 
+                       <td key={data.amount+index+data.name}  className="px-6 py-4">{data.amount}</td>
+                        : 
+                       <td  key={data.amount+index+data.name} className="px-6 py-4">-</td>
+
+                      })
+                    }
+
+                      {
+                      item.deductions?.map((data,index) => {
+                        return data.amount != null ? 
+                       <td key={data.amount+index+data.name}  className="px-6 py-4">{data.amount}</td>
+                        : 
+                       <td  key={data.amount+index+data.name} className="px-6 py-4">-</td>
+
+                      })
+                    }
                   </tr>
                 ))}
               </tbody>

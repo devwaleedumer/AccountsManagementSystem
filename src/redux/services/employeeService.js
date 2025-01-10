@@ -28,7 +28,15 @@ export const employeeService = createApi({
         }
       },
             invalidatesTags: ['employee']
-
+    }),
+    generateAdhocEmployeesSalary: builder.mutation({
+      query: () => {
+        return {
+          url: `Employees/adhoc-employee-salary`,
+          method: 'POST',
+        }
+      },
+            invalidatesTags: ['employee']
     }),
     deleteEmployee: builder.mutation({
       query: (id) => {
@@ -49,12 +57,19 @@ export const employeeService = createApi({
       },
       providesTags: ['employee']
     }),
-    getEmployeeById: builder.query({
+    getAllEmployeesByWithDeductionsAndAllowances: builder.query({
+      query: (id) =>  `Employees/get-emp-salary-p-a/${id}`,
+    })
+    ,getEmployeeById: builder.query({
       query: (id) => `employees/${id}`, 
       providesTags: ['employee']
     }),
       employeeAllowances: builder.query({
       query: (id) => `employees/${id}`, 
+      providesTags: ['employee']
+    }),    
+      getEmployeeByIdAllDetails: builder.query({
+      query: (id) => `employees/full-details/${id}`, 
       providesTags: ['employee']
     }),    
   }),
@@ -67,5 +82,8 @@ export const {
   useGetAllEmployeesQuery,
   useEditEmployeeMutation,
   useGetEmployeeByIdQuery,
-  useDeleteEmployeeMutation
+  useDeleteEmployeeMutation,
+  useGetAllEmployeesByWithDeductionsAndAllowancesQuery,
+  useGenerateAdhocEmployeesSalaryMutation,
+  getEmployeeByIdAllDetails
   } = employeeService;

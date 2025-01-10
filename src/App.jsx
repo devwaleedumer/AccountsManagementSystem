@@ -42,6 +42,7 @@ import EditDesignation from "./components/designation/EditDesignation"
 import EmployeeTypes from "./components/employee-type/EmployeeTypes"
 import EditEmployeeType from "./components/employee-type/EditEmployeeType"
 import Home from "./components/Home"
+import ForgotPassword from "./pages/ForgetPassword"
 function App() {
 
   return (
@@ -100,6 +101,7 @@ function App() {
         <Route path="employee-type/edit/:id"  element={<EditEmployeeType/>}/>
         </Route>
         <Route path="/login"  element={<Login/>}/>
+        <Route path="/forgot-password"  element={<ForgotPassword/>}/>
          
 
       </Routes>

@@ -22,13 +22,13 @@ import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandi
         icon: ReceiptText
     },
      {
-        title: "Expenditures",
-        to: "expenditures",
+        title: "Allowances",
+        to: "allowance",
         icon: Receipt
     },
      {
-        title: "Heads",
-        to: "head-of-accounts",
+        title: "Deductions",
+        to: "deduction",
         icon: Boxes
     },
      {
@@ -42,9 +42,14 @@ import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandi
         icon: BuildingIcon
     },
      {
-        title: "Activities",
-        to: "activities",
+        title: "Designations",
+        to: "designation",
         icon: Timer
+    },
+     {
+        title: "Employee Types",
+        to: "employee-type",
+        icon: Boxes
     },
     
 ]

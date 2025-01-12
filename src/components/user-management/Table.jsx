@@ -71,16 +71,16 @@ const Table = () => {
                     Soban
                 </td>
                 <td className="px-6 py-4">
-                    Soban10
+                    3740582749274
                 </td>
                 <td className="px-6 py-4">
-                    Soban@gmail.com
+                    03008328282
                 </td>
                 <td className="px-6 py-4">
-                    0300-0000000
+                    Admin
                 </td>
                 <td className="px-6 py-4">
-                    Moderator
+                    soban56@gmail.com
                 </td>
                 <td className="px-6 py-4">
                     Active

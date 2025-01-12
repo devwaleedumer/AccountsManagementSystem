@@ -106,7 +106,7 @@ const CreateBasicPay = () => {
               </p>
             )}
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-center">
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}

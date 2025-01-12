@@ -138,11 +138,8 @@ const CreateDepartment = () => {
               </p>
             )}
           </div>
-          <div className="flex justify-between">
-            <button className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
-              <ArrowLeft className="mr-1" />
-              Back
-            </button>
+          <div className="flex justify-center">
+            
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}

@@ -4,14 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 // Mock user data - In a real app, this would come from your auth/API
 const currentUser = {
-  name: "John Doe",
-  role: "HR Administrator",
-  employeeType: "Full Time",
-  email: "john.doe@company.com",
-  phone: "+1 (555) 123-4567",
-  department: "Human Resources",
-  joinDate: "Jan 2023",
-  imageUrl: "https://picsum.photos/40"
+  name: "Hammad Haider Kiani",
+  role: "Head of Accounts Department",
+  employeeType: "Permanent",
+  email: "Kiani123@gmail.com",
+  phone: "0300-1234567",
+  department: "Administration",
+  joinDate: "Jan 2010",
+  imageUrl: "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
 }
 
 const Header = () => {

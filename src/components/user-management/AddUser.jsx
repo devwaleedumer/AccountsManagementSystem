@@ -131,7 +131,7 @@ export const AddUser = () => {
               {errors.confirmPassword && <p className="text-red-500 text-xs italic mt-1">{errors.confirmPassword.message}</p>}
             </div>
          <div className="">
-             <button type="button" onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}  className="bg-primary w-full sm:w-40   my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
+             <button type="button" onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}  className="bg-primary sm:w-40   my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
             {
           !isLoading ? "Register" : <Loader className="size-5 text-center animate-spin"/>}
             

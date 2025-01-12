@@ -131,15 +131,12 @@ const CreateAllowance = () => {
                 <input {...register("isRepetitive")} id="default-checkbox" type="checkbox" value="" className="size-6  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 "/>
                 <label htmlFor="default-checkbox" className="ms-2  font-medium  ">Is Repetitive</label>
             </div>
-          <div className="flex justify-between">
-            <button className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
-              <ArrowLeft className="mr-1" />
-              Back
-            </button>
+          <div className="flex justify-center">
+            
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}
-              className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center" >
+              className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg   px-5 flex justify-items-center" >
               {!isLoading ? (
                 "Create"
               ) : (

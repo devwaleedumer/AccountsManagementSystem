@@ -35,7 +35,7 @@ const handleToggleSidebar = () => {
       <div className="py-[6px] px-[14px] absolute bottom-0 border-t  left-0 w-full bg-primary-2 text-primary-foreground z-[99]">
         <div className=" flex items-center  min-h-[60px] w-full">
             <h1 className={`font-bold text-2xl transition-opacity duration-500 ${toggleSidebar == false ? "opacity-100" : "opacity-0" }`}>
-              Admin
+              Logout
             </h1>
            <LogOut  onClick={() => handleToggleSidebar()} className={`absolute size-5 cursor-pointer transition-all duration-500 right-7 ${toggleSidebar && "  rotate-180"}`} alt="" />
 

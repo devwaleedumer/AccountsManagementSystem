@@ -51,6 +51,11 @@ import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandi
         to: "employee-type",
         icon: Boxes
     },
+    {
+        title: "Base Pay",
+        to: "BasicPays",
+        icon: Boxes
+    },
     
 ]
 

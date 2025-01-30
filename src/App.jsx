@@ -95,12 +95,15 @@ function App() {
         <Route path="deduction/create"  element={<CreateDeduction/>}/>
         <Route path="deduction/edit/:id"  element={<EditDeduction/>}/>
         <Route path="deduction"  element={<Deductions/>}/>
+
         <Route path="allowance/create"  element={<CreateAllowance/>}/>
         <Route path="allowance"  element={<Allowances/>}/>
         <Route path="allowance/edit/:id"  element={<EditAllowance/>}/>
+
         <Route path="employee-type/create"  element={<CreateEmployeeType/>}/>
         <Route path="employee-type"  element={<EmployeeTypes/>}/>
         <Route path="employee-type/edit/:id"  element={<EditEmployeeType/>}/>
+        
         </Route>
         <Route path="/login"  element={<Login/>}/>
         <Route path="/forgot-password"  element={<ForgotPassword/>}/>

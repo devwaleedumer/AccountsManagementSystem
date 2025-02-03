@@ -44,6 +44,7 @@ import EditEmployeeType from "./components/employee-type/EditEmployeeType"
 import Home from "./components/Home"
 import ForgotPassword from "./pages/ForgetPassword"
 import EditEmployee from "./components/employee/EditEmployee"
+import AddFeeRecord from "./components/students-fee-record/AddFeeRecord"
 function App() {
 
   return (
@@ -53,6 +54,7 @@ function App() {
       <Routes>
         <Route  path="/ams"  element={<Layout/>}>
            <Route  index element={<Home/>}/>  
+
           <Route  path="users" element={<UserList/>}/> 
           <Route  path="users/view-user" element={<ViewUser/>}/> 
           <Route  path="users/add-user" element={<AddUser/>}/> 
@@ -103,6 +105,9 @@ function App() {
         <Route path="employee-type/create"  element={<CreateEmployeeType/>}/>
         <Route path="employee-type"  element={<EmployeeTypes/>}/>
         <Route path="employee-type/edit/:id"  element={<EditEmployeeType/>}/>
+
+        <Route path="Add-Fee-Record"  element={<AddFeeRecord/>}/>
+
         
         </Route>
         <Route path="/login"  element={<Login/>}/>

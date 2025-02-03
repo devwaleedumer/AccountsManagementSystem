@@ -130,7 +130,7 @@ export const AddUser = () => {
             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-primary focus:ring-offset-2 " id="confirmPassword" type="password" placeholder="Confirm Password" {...register("confirmPassword")}/>
               {errors.confirmPassword && <p className="text-red-500 text-xs italic mt-1">{errors.confirmPassword.message}</p>}
             </div>
-         <div className="">
+         <div className="justify-items-center">
              <button type="button" onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}  className="bg-primary sm:w-40   my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
             {
           !isLoading ? "Register" : <Loader className="size-5 text-center animate-spin"/>}

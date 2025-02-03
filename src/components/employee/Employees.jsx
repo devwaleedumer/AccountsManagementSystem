@@ -1,4 +1,4 @@
-import { LoaderCircleIcon, LucideEye, PenSquareIcon, Trash2 } from 'lucide-react'
+import { LoaderCircleIcon, LucideEye, PenSquareIcon, Printer, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useDeleteEmployeeMutation, useGetAllEmployeesQuery } from '../../redux/services/employeeService'
 
@@ -8,6 +8,90 @@ const Employees = () => {
     const handleDelete = async(id) =>{
        await deleteEmployee(id)
     }
+const generateReport = () => {
+  const printWindow = window.open("", "_blank");
+  const head = document.head.innerHTML;
+
+  // Add Tailwind CSS CDN for styling in the new window
+  const tailwindCDN = `
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+       
+        th {
+          background-color: #f3f4f6;
+          font-weight: bold;
+        }
+      }
+    </style>
+  `;
+
+  // Generate the table rows from the data
+  const tableRows = data
+    ?.map(
+      (item) => `
+      <tr class="bg-white border-b hover:bg-gray-50">
+        <td class="px-6 py-4">${item.id}</td>
+        <td class="px-6 py-4">${item.fullName}</td>
+        <td class="px-6 py-4">${item.cnic}</td>
+        <td class="px-6 py-4">${item.contactNo}</td>
+        <td class="px-6 py-4">${item.scale}</td>
+        <td class="px-6 py-4">${item.designation}</td>
+        <td class="px-6 py-4">${item.department}</td>
+        <td class="px-6 py-4">${item.employmentType}</td>
+        <td class="px-6 py-4">${item.employeeType}</td>
+        <td class="px-6 py-4">${item.contractFrom || "-"}</td>
+        <td class="px-6 py-4">${item.contractTo || "-"}</td>
+      </tr>
+    `
+    )
+    .join("");
+
+  // Write the HTML content to the new window
+  printWindow.document.write(`
+    <html>
+      <head>
+        ${head}
+        ${tailwindCDN}
+      </head>
+      <body>
+        <h1 class="text-2xl font-bold text-center my-4">Employee Report</h1>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-collapse">
+          <thead class="text-xs uppercase bg-gray-200 text-gray-700">
+            <tr>
+              <th class="px-6 py-3 border">Id</th>
+              <th class="px-6 py-3 border">Full Name</th>
+              <th class="px-6 py-3 border">CNIC</th>
+              <th class="px-6 py-3 border">Contact No.</th>
+              <th class="px-6 py-3 border">Scale</th>
+              <th class="px-6 py-3 border">Designation</th>
+              <th class="px-6 py-3 border">Department</th>
+              <th class="px-6 py-3 border">Employment Type</th>
+              <th class="px-6 py-3 border">Employee Type</th>
+              <th class="px-6 py-3 border">Contract From</th>
+              <th class="px-6 py-3 border">Contract To</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  printWindow.close();
+};
 
   return (
     isLoading ?
@@ -33,7 +117,11 @@ const Employees = () => {
                     </form>
                 </div>
                 <div className="w-full font-roboto  md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <Link to={'create'} className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                <button onClick={generateReport} className='flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800'>
+                <Printer className='mr-2 size-4'/>
+                    Print
+                </button>
+                <Link to={'create'} className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>

@@ -2,20 +2,25 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {  Loader, PlusCircle, } from "lucide-react";
+import {  Loader, PlusCircle, XIcon, } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../redux/services/authService";
-import {  useEffect } from "react";
+import {  useEffect, useState } from "react";
  // Validation schema using Yup
 const schema = yup.object().shape({
  fullName: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("userName is required"),
+    .min(6, "Full Name must be at least 6 characters")
+    .required("Full Name is required"),
+    phoneNumber: yup
+    .string()
+    .min(11, "Phone Number must be at least 6 characters")
+    .required("Number is required"),
  email: yup
     .string()
     .email("Please enter a valid email")
     .required("Email is required"),
+
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
@@ -24,10 +29,20 @@ const schema = yup.object().shape({
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
     .required("Confirm Password is required"),
+      role: yup.string().required("Role is required")
+          .typeError("Please select a valid Role"), // Ensures a valid number is selected
+    
 });
 export const AddUser = () => {
+   const [showAlert, setShowAlert] = useState(true);
+  
     const router = useNavigate();
    const [registerUser,{isLoading,isError,isSuccess}] =  useRegisterMutation()
+   useEffect(() => {
+    
+  
+  },
+  [isSuccess,isError,isLoading])
    const {
        register,
        handleSubmit,
@@ -53,8 +68,28 @@ export const AddUser = () => {
         <div className="mb-5 bg-primary-2 shadow-t-lg rounded-t-lg py-3">
           <div className=" text-primary-foreground  ml-2 flex items-center"><PlusCircle className="size-5 inline-block mr-2"/><span> Register User</span></div>
         </div>
-        <p className="text-red-500 text-xs italic my-2">{isError ? "Invalid credentials" : ""}</p>
-          <div className="space-y-4 p-6">
+        {
+          showAlert && isSuccess &&  (
+            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative" role="alert">
+              <p className="font-bold">Success</p>
+              <p>Department  created successfully</p>
+              <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
+                <XIcon />
+              </button>
+            </div>
+          )
+        }
+        {
+         showAlert &&  isError && (
+            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 relative" role="alert">
+              <p className="font-bold">Error</p>
+              <p>Something went wrong</p>
+               <button onClick={() => setShowAlert(false)} className="w-4 h-4 ml-auto absolute right-4 top-2">
+                <XIcon />
+              </button>
+            </div>
+          )
+        }          <div className="space-y-4 p-6">
              <div className="w-full">
             <label className="block  mb-1" htmlFor="fullName">
              Full Name
@@ -63,49 +98,32 @@ export const AddUser = () => {
             {errors.fullName && <p className="text-red-500 text-xs italic mt-1">{errors.fullName.message}</p>}
             </div>
             <div className="w-full">
-            <label className="block  mb-1" htmlFor="CNIC Number">
-              CNIC Number
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="CNIC"
-              type="text"
-              placeholder="CNIC Number"
-              {...register("cNIC")}
-            />
-            {errors.cNIC && (
-              <p className="text-red-500 text-xs italic mt-1">
-                {errors.cNIC.message}
-              </p>
-            )}
-          </div>
-            
-            <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
              Phone Number
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="phone number" type="name" placeholder="Phone Number" {...register("fullName")}/>
-            {errors.fullName && <p className="text-red-500 text-xs italic mt-1">{errors.fullName.message}</p>}
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2" id="phone number" type="name" placeholder="Phone Number" {...register("phoneNumber")}/>
+            {errors.phoneNumber && <p className="text-red-500 text-xs italic mt-1">{errors.phoneNumber.message}</p>}
             </div>
-            <div className="w-full">
-            <label className="block  mb-1" htmlFor="religion">
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="departmentTypeId">
               Role
             </label>
-            <select
-              id="role"
-              defaultValue=""
-              {...register("role")}
-              className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
-              <option value="">Select Role</option>
-              <option value="Admin">Admin</option>
-              <option value="Auditor">Auditor</option>
-              <option value="Salary Incharge">Salary Incharge</option>
-              <option value="Data Entry Operator">Data Entry Operator</option>
+            <select  id="role"
+            defaultValue="" 
+          {...register("role")}
+            className="shadow bg-white   border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+><option value="" >Select Role</option>
+
+                <option value={"Admin"} >Admin</option>
+                <option value={"Auditor"} >Auditor</option>
+                <option value={"Salary Incharge"} >Salary Incharge</option>
+                <option value={"Data Entry Operator"} >Data Entry Operator</option>
+
+
             </select>
-            {errors.religion && (
+            {errors.role && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.religion.message}
+                {errors.role.message}
               </p>
             )}
           </div>

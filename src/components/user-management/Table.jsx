@@ -1,9 +1,16 @@
-import { LucideEye, PenSquareIcon, Trash2 } from "lucide-react"
+import { LoaderCircleIcon, LucideEye, PenSquareIcon, Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useGetAllUsersAsyncQuery } from "../../redux/services/authService";
 
 const Table = () => {
+    const {data,isLoading}=useGetAllUsersAsyncQuery();   
   return (
-   <section className="p-3 ">
+  isLoading ?
+    <div className='w-full h-full'>
+        <LoaderCircleIcon className='animate-spin size-20 text-primary mx-auto mt-52'/>
+    </div>
+    :  
+  <section className="p-3 ">
      <div className="mx-auto w-full px-4 ">
             <div className="text-primary-foreground  bg-white  relative shadow-md sm:rounded-lg overflow-scroll border">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4 bg-image">
@@ -42,7 +49,7 @@ const Table = () => {
                     Full Name
                 </th>
                 <th scope="col" className="px-6 py-3 border-r">
-                    CNIC Number
+                    User Name
                 </th>
                 <th scope="col" className="px-6 py-3 border-r">
                     Phone Number
@@ -62,28 +69,30 @@ const Table = () => {
             </tr>
         </thead>
         <tbody>
-            <tr className=" bg-white border-b  hover:bg-gray-50">
+            {
+                data?.map((item) => (
+                    <tr className=" bg-white border-b  hover:bg-gray-50" key={item.username}>
                
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                    1
+                    {item.id}
                 </th>
                 <td className="px-6 py-4">
-                    Soban
+                    {item.fullName}
                 </td>
                 <td className="px-6 py-4">
-                    3740582749274
+                    {item.userName}
                 </td>
                 <td className="px-6 py-4">
-                    03008328282
+                    {item.phoneNumber ? item.phoneNumber : 'N/A' }
                 </td>
                 <td className="px-6 py-4">
-                    Admin
+                    {item.role ? item.role : 'N/A' }
                 </td>
                 <td className="px-6 py-4">
-                    soban56@gmail.com
+                   {item.email}
                 </td>
                 <td className="px-6 py-4">
-                    Active
+                    {item.isActive ? "Active" : "Inactive"}
                 </td>
                 <td className="flex items-center px-6 py-4 space-x-2">
                    <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
@@ -98,6 +107,8 @@ const Table = () => {
 
                 </td>
             </tr>
+                ))
+            }
            
            
         </tbody>

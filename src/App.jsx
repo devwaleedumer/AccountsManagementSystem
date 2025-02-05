@@ -44,6 +44,9 @@ import EditEmployeeType from "./components/employee-type/EditEmployeeType"
 import Home from "./components/Home"
 import ForgotPassword from "./pages/ForgetPassword"
 import EditEmployee from "./components/employee/EditEmployee"
+import Protected from "./components/Protected"
+import UnAuthorized from "./components/UnAuthorized"
+import AddFeeRecord from "./components/students-fee-record/AddFeeRecord"
 function App() {
 
   return (

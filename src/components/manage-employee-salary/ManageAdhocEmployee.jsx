@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const ManageAdhocEmployeeSalary = () => {
   const { id } = useParams(); // Get the "id" parameter from the route
-  const {data: deductionsData, isLoading: deductionLoading} = useEmployeeDeductionsQuery(id)
+  const {data: deductionsData, isLoading: deductionLoading,refetch} = useEmployeeDeductionsQuery(id)
   const {data: allowanceData, isLoading: allowanceLoading} = useEmployeeAllowanceQuery(id)
   const {data: employee, isLoading: employeeLoading} = useGetEmployeeByIdQuery(id)
   const [deleteEmployeeDeduction,] = useDeleteEmployeeDeductionMutation();
@@ -26,7 +26,10 @@ const ManageAdhocEmployeeSalary = () => {
     await deleteEmployeeDeduction({deductionId: deductionId, employeeId: id});
   }
    const handleEmployeeAllowanceDeletion = async (allowanceId) => {
-    await deleteEmployeeAllowance({allowanceId: allowanceId, employeeId: id});
+    await deleteEmployeeAllowance({allowanceId: allowanceId, employeeId: id}).unwrap(() => {
+      refetch()
+    });
+    
   }
   return (
     !(deductionLoading && allowanceLoading && deductionsData != undefined && allowanceData != undefined && employeeLoading && employee != undefined) 

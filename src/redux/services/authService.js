@@ -35,10 +35,18 @@ export const authService = createApi({
         }
       }
     }),
+      getUserMeAsync: builder.query({
+      query: () => {
+        return {
+          url: `users/me`,
+          method: 'GET',
+        }
+      }
+    })
 
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useLoginMutation,useRegisterMutation,useGetAllUsersAsyncQuery} = authService
+export const {useLoginMutation,useRegisterMutation,useGetAllUsersAsyncQuery,useGetUserMeAsyncQuery} = authService

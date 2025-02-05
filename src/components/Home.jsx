@@ -1,5 +1,6 @@
-import { BadgeCheck, Building, Building2, BuildingIcon, CalendarDays, DollarSign, Mail, Minus, Phone, Plus, UserCircle, UserCog, UserMinus, Users, Wallet } from "lucide-react"
+import { BadgeCheck, Building, Building2, BuildingIcon, CalendarDays, DollarSign, Mail, Minus, Phone, Plus, UserCircle, UserCog, Users, Wallet } from "lucide-react"
 import { Link } from "react-router-dom"
+import { getUser } from "../core/data/tokenLocalStorageService"
 // Mock user data - In a real app, this would come from your auth/API
 const currentUser = {
   name: "Hammad Haider Kiani",
@@ -11,7 +12,9 @@ const currentUser = {
   joinDate: "Jan 2010",
   imageUrl: "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
 }
+
 const Home = () => {
+const user = getUser();
   return (
    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* User Information Card */}
@@ -30,8 +33,8 @@ const Home = () => {
                   className="rounded-full"
                 />
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">{currentUser.name}</h3>
-                  <p className="text-sm text-gray-500">{currentUser.role}</p>
+                  <h3 className="text-lg font-medium text-gray-900">{user?.userName}</h3>
+                  <p className="text-sm text-gray-500">{user?.role}</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -48,14 +51,14 @@ const Home = () => {
                 <div className="flex items-center text-sm">
                   <Mail className="h-5 w-5 text-green-600 mr-2" />
                   <span className="text-gray-600">Email:</span>
-                  <span className="ml-2 font-medium text-gray-900">{currentUser.email}</span>
+                  <span className="ml-2 font-medium text-gray-900">{user?.email}</span>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center text-sm">
                   <Phone className="h-5 w-5 text-green-600 mr-2" />
                   <span className="text-gray-600">Phone:</span>
-                  <span className="ml-2 font-medium text-gray-900">{currentUser.phone}</span>
+                  <span className="ml-2 font-medium text-gray-900">{user?.phoneNumber || "N/A"}</span>
                 </div>
                 <div className="flex items-center text-sm">
                   <CalendarDays className="h-5 w-5 text-green-600 mr-2" />
@@ -76,7 +79,7 @@ const Home = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-green-900">Total Employees</p>
-                <p className="text-2xl font-semibold text-green-900">1,234</p>
+                <p className="text-2xl font-semibold text-green-900">24</p>
               </div>
             </div>
           </div>
@@ -87,29 +90,7 @@ const Home = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-green-900">Departments</p>
-                <p className="text-2xl font-semibold text-green-900">12</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6 hover:bg-green-200 transition-colors duration-200">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-green-200">
-                <UserMinus className="h-6 w-6 text-green-700" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-green-900">On Leave</p>
-                <p className="text-2xl font-semibold text-green-900">23</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6 hover:bg-green-200 transition-colors duration-200">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-green-200">
-                <UserCog className="h-6 w-6 text-green-700" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-green-900">New Requests</p>
-                <p className="text-2xl font-semibold text-green-900">5</p>
+                <p className="text-2xl font-semibold text-green-900">15</p>
               </div>
             </div>
           </div>

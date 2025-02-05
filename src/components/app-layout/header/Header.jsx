@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
+import { getUser } from "../../../core/data/tokenLocalStorageService";
 
 // Mock user data - In a real app, this would come from your auth/API
 const currentUser = {
@@ -17,6 +18,7 @@ const currentUser = {
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const user = getUser();
   const onClickBack = () => {
     navigate(-1)
   }
@@ -36,8 +38,8 @@ const Header = () => {
      </div>         
       <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-sm font-medium text-white">{currentUser.name}</p>
-                <p className="text-xs text-primary-foreground">{currentUser.role}</p>
+                <p className="text-sm font-medium text-white">{user?.userName}</p>
+                <p className="text-xs text-primary-foreground">{user?.role}</p>
               </div>
               <img
                 src={currentUser.imageUrl}

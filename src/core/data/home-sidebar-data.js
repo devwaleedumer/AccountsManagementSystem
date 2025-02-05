@@ -53,7 +53,7 @@ import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandi
     },
     {
         title: "Base Pay",
-        to: "BasicPays",
+        to: "base-pay",
         icon: Boxes
     },
     

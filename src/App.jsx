@@ -44,6 +44,8 @@ import EditEmployeeType from "./components/employee-type/EditEmployeeType"
 import Home from "./components/Home"
 import ForgotPassword from "./pages/ForgetPassword"
 import EditEmployee from "./components/employee/EditEmployee"
+import Protected from "./components/Protected"
+import UnAuthorized from "./components/UnAuthorized"
 function App() {
 
   return (
@@ -51,7 +53,8 @@ function App() {
     <Provider store={store}>
        <BrowserRouter>
       <Routes>
-        <Route  path="/ams"  element={<Layout/>}>
+        <Route element={<Protected allowedRoles={["Admin","Auditor","Data Entry Operator"]}  />}>
+          <Route  path="/ams"  element={<Layout/>}>
            <Route  index element={<Home/>}/>  
           <Route  path="users" element={<UserList/>}/> 
           <Route  path="users/view-user" element={<ViewUser/>}/> 
@@ -90,6 +93,7 @@ function App() {
         <Route path="salary/permanent-employee-salary"  element={<PermanentEmployeeSalary/>}/>
         <Route path="salary/adhoc-employee-salary"  element={<AdhocEmployeeSalary/>}/>
         <Route path="salary/contract-employee-salary"  element={<ContractEmployeeSalary/>}/>
+        <Route path="salary/contract-employee-salary/manage-contract-employee-salary/:id"  element={<ManageAdhocEmployeeSalary/>}/>
         <Route path="salary/fixed-employee-salary"  element={<FixedEmployeeSalary/>}/>
       
         <Route path="deduction/create"  element={<CreateDeduction/>}/>
@@ -105,7 +109,9 @@ function App() {
         <Route path="employee-type/edit/:id"  element={<EditEmployeeType/>}/>
         
         </Route>
+        </Route>
         <Route path="/login"  element={<Login/>}/>
+        <Route path="/unauthorized"  element={<UnAuthorized/>}/>
         <Route path="/forgot-password"  element={<ForgotPassword/>}/>
          
 

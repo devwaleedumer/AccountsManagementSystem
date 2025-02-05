@@ -6,6 +6,7 @@ import { useLoginMutation } from "../redux/services/authService";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../core/data/tokenLocalStorageService";  
  // Validation schema using Yup
 const schema = yup.object().shape({
   email: yup
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
 
 
 function Login() {
-const [login,{isLoading,isError,isSuccess}] =  useLoginMutation()
+const [login,{data: userData,isLoading,isError,isSuccess}] =  useLoginMutation()
 const router = useNavigate();
 const {
     register,
@@ -39,6 +40,7 @@ const {
 // isSuccess = true
 useEffect(() => {
     if(isSuccess){
+      setUser(userData)
        router("/ams")
     }
 },[isSuccess]);

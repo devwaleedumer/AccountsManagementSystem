@@ -1,9 +1,11 @@
-import { CheckSquare, Loader, LoaderCircleIcon, XIcon } from "lucide-react";
+import {  Loader, LoaderCircleIcon, XIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGenerateAdhocEmployeesSalaryMutation, useGetAllEmployeesByWithDeductionsAndAllowancesQuery } from "../../redux/services/employeeService";
 import { format } from 'date-fns';
 import { useGetAllEmployeeDeductionAndAllowanceQuery } from "../../redux/services/deductionService";
 import { useState } from "react";
+import axios from 'axios';
+import { saveAs } from 'file-saver';
 const AdhocEmployeeSalary = () => {
   const { isLoading, data } = useGetAllEmployeesByWithDeductionsAndAllowancesQuery(2);
   const [generatePayRole,{isLoading: generatePayRoleLoading, isSuccess: generatePayRoleSuccess, isError: generatePayRoleError}] =  useGenerateAdhocEmployeesSalaryMutation();
@@ -11,7 +13,27 @@ const AdhocEmployeeSalary = () => {
      await generatePayRole()
   }
     const [showAlert, setShowAlert] = useState(true);
-  
+    const [reportLoading, setReportLoading] = useState(false);
+  const handleDownload = async () => {
+    setReportLoading(true)
+    try {
+      // Step 1: Fetch the Excel file from the API
+      const response = await axios.get('https://localhost:7161/api/reports?employmentType='+2, {
+        responseType: 'arraybuffer', // Ensures that the data is returned as a binary stream
+      }).finally(() => {
+          setReportLoading(false);
+      });
+
+      // Step 2: Create a Blob from the response data
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Step 3: Use FileSaver to save the file
+      saveAs(blob, `adhoc-employee-salary--${new Date().getMonth() + 1}-${new Date().getFullYear()}.xlsx`);
+    } catch (error) {
+      console.error('Error downloading the Excel file', error);
+    }
+  };
+
   const { isLoading: ADIsLoading,data: ADData} = useGetAllEmployeeDeductionAndAllowanceQuery()
   return isLoading || ADIsLoading ? (
     <div className="w-full h-full">
@@ -103,12 +125,12 @@ const AdhocEmployeeSalary = () => {
 
               //   </button>
                  <button
+                 onClick={async() => await handleDownload()}
+                 disabled= {reportLoading}
             type="button"
             className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
           >
-              <CheckSquare className="size-3.5 mr-2 font-bold"/>
-                PayRoll ALready Generated for This Month
-           
+            Download Report
           </button>
                 :
                  <button

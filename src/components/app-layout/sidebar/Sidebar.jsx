@@ -2,10 +2,17 @@ import PropTypes from "prop-types";
 import './Sidebar.css'
 import sideBarMenuItems from "../../../core/data/home-sidebar-data";
 import { LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { removeUser } from "../../../core/data/tokenLocalStorageService";
 const Sidebar = ({toggleSidebar,setToggleSidebar}) => {
+  const router = useNavigate();
+
 const handleToggleSidebar = () => {
     setToggleSidebar(!toggleSidebar);}
+    const handleLogoutUser = () => {
+      removeUser();
+      router('/login');
+    }
   return (
     <div className={`fixed overflow-hidden h-full top-0 left-0 z-20  py-[6px] px-[14px] font-roboto transition-[width] duration-500 bg-background border shadow-3xl  ${toggleSidebar ?  "w-[78px]" : "w-[250px]" }`} >
        {/* Head */}
@@ -37,7 +44,7 @@ const handleToggleSidebar = () => {
             <h1 className={`font-bold text-2xl transition-opacity duration-500 ${toggleSidebar == false ? "opacity-100" : "opacity-0" }`}>
               Logout
             </h1>
-           <LogOut  onClick={() => handleToggleSidebar()} className={`absolute size-5 cursor-pointer transition-all duration-500 right-7 ${toggleSidebar && "  rotate-180"}`} alt="" />
+           <LogOut  onClick={() => handleLogoutUser()} className={`absolute size-5 cursor-pointer transition-all duration-500 right-7 ${toggleSidebar && "  rotate-180"}`} alt="" />
 
         </div>
       </div>

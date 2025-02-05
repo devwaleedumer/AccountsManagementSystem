@@ -1,11 +1,39 @@
-import { CheckSquare, LoaderCircleIcon } from "lucide-react";
+import {  Loader, LoaderCircleIcon, XIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useGetAllEmployeesByWithDeductionsAndAllowancesQuery } from "../../redux/services/employeeService";
+import { useGeneratePermanentEmployeesSalaryMutation, useGetAllEmployeesByWithDeductionsAndAllowancesQuery } from "../../redux/services/employeeService";
 import { format } from 'date-fns';
 import { useGetAllEmployeeDeductionAndAllowanceQuery } from "../../redux/services/deductionService";
+import { saveAs } from "file-saver";
+import axios from "axios";
+import { useState } from "react";
 const PermanentEmployeeSalary = () => {
   const { isLoading, data } = useGetAllEmployeesByWithDeductionsAndAllowancesQuery(1);
   const { isLoading: ADIsLoading,data: ADData} = useGetAllEmployeeDeductionAndAllowanceQuery()
+    const [generatePayRole,{isLoading: generatePayRoleLoading, isSuccess: generatePayRoleSuccess, isError: generatePayRoleError}] =  useGeneratePermanentEmployeesSalaryMutation();
+  const handleGenerateEmployeePayRole = async () => {
+     await generatePayRole()
+  }
+    const [showAlert, setShowAlert] = useState(true);
+    const [reportLoading, setReportLoading] = useState(false);
+  const handleDownload = async () => {
+    setReportLoading(true)
+    try {
+      // Step 1: Fetch the Excel file from the API
+      const response = await axios.get('https://localhost:7161/api/reports?employmentType='+1, {
+        responseType: 'arraybuffer', // Ensures that the data is returned as a binary stream
+      }).finally(() => {
+          setReportLoading(false);
+      });
+
+      // Step 2: Create a Blob from the response data
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Step 3: Use FileSaver to save the file
+      saveAs(blob, `permanent-employee-salary-${new Date().getMonth() + 1}-${new Date().getFullYear()}.xlsx`);
+    } catch (error) {
+      console.error('Error downloading the Excel file', error);
+    }
+  };
   return isLoading || ADIsLoading ? (
     <div className="w-full h-full">
       <LoaderCircleIcon className="animate-spin size-20 text-primary mx-auto mt-52" />
@@ -19,6 +47,36 @@ const PermanentEmployeeSalary = () => {
             Generate Monthly Payroll for Permanent Employee
           </h4>
         </div>
+          {showAlert && generatePayRoleSuccess && (
+          <div
+            className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 relative"
+            role="alert"
+          >
+            <p className="font-bold">Success</p>
+            <p>Payroll Generated successFully</p>
+            <button
+              onClick={() => setShowAlert(false)}
+              className="w-4 h-4 ml-auto absolute right-4 top-2"
+            >
+              <XIcon />
+            </button>
+          </div>
+        )}
+        {showAlert && generatePayRoleError && (
+          <div
+            className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 relative"
+            role="alert"
+          >
+            <p className="font-bold">Error</p>
+            <p>Something went wrong</p>
+            <button
+              onClick={() => setShowAlert(false)}
+              className="w-4 h-4 ml-auto absolute right-4 top-2"
+            >
+              <XIcon />
+            </button>
+          </div>
+        )}
         <div className="text-primary-foreground  bg-white  relative shadow-md sm:rounded-lg overflow-scroll border">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4 bg-image">
             <div className="w-full md:w-1/2">
@@ -58,18 +116,22 @@ const PermanentEmployeeSalary = () => {
               </div>
              {
               data.isPayRollGenerated ? 
-                <button
-                className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-              >
-               <CheckSquare className="size-3.5 mr-2 font-bold"/>
-                PayRoll ALready Generated for This Month
+               <button
+                 onClick={async() => await handleDownload()}
+                 disabled= {reportLoading}
+            type="button"
+            className="bg-primary my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
+          >
+            Download Report
+          </button>:
+                  <button
+                onClick={async() => await handleGenerateEmployeePayRole()}
 
-                </button>:
-                 <Link
-              
-                to={"create"}
                 className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
+                {
+                  !generatePayRoleLoading ?
+                  <>
                 <svg
                   className="h-3.5 w-3.5 mr-2"
                   fill="currentColor"
@@ -84,7 +146,12 @@ const PermanentEmployeeSalary = () => {
                   />
                 </svg>
                 Generate Payroll
-              </Link>
+                </>
+               : (
+              <Loader className="size-5 text-center animate-spin" />
+            )
+                }
+              </button>
              }
             </div>
           </div>

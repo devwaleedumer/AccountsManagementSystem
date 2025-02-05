@@ -38,6 +38,33 @@ export const employeeService = createApi({
       },
             invalidatesTags: ['employee']
     }),
+    generateContractEmployeesSalary: builder.mutation({
+      query: () => {
+        return {
+          url: `Employees/contract-employee-salary`,
+          method: 'POST',
+        }
+      },
+            invalidatesTags: ['employee']
+    }),
+    generateFixedEmployeesSalary: builder.mutation({
+      query: () => {
+        return {
+          url: `Employees/fixed-employee-salary`,
+          method: 'POST',
+        }
+      },
+            invalidatesTags: ['employee']
+    }),
+    generatePermanentEmployeesSalary: builder.mutation({
+      query: () => {
+        return {
+          url: `Employees/permanent-employee-salary`,
+          method: 'POST',
+        }
+      },
+            invalidatesTags: ['employee']
+    }),
     deleteEmployee: builder.mutation({
       query: (id) => {
         return {
@@ -85,5 +112,9 @@ export const {
   useDeleteEmployeeMutation,
   useGetAllEmployeesByWithDeductionsAndAllowancesQuery,
   useGenerateAdhocEmployeesSalaryMutation,
-  useGetEmployeeByIdAllDetailsQuery
+  useGetEmployeeByIdAllDetailsQuery,
+  useGenerateContractEmployeesSalaryMutation,
+  useGenerateFixedEmployeesSalaryMutation,
+  useGeneratePermanentEmployeesSalaryMutation,
+  useEmployeeAllowancesQuery
   } = employeeService;

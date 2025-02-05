@@ -140,7 +140,7 @@ const EditDeduction = () => {
                 <input {...register("isRepetitive")} id="default-checkbox" type="checkbox" value="" className="size-6  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 "/>
                 <label htmlFor="default-checkbox" className="ms-2  font-medium  ">Is Repetitive</label>
             </div>
-          <div className="flex justify-between">
+          <div className="justify-items-center">
           
             <button
               type="button"

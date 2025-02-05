@@ -84,7 +84,7 @@ const CreateAllowance = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Department Type Name"
+              placeholder="Allowance Name"
               {...register("name")}
             />
             {errors.name && (

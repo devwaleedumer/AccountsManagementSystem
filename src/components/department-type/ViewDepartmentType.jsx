@@ -37,8 +37,7 @@ const ViewDepartmentType = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center"> 
-             <Link to={'/ams/department-type'}  className="bg-primary w-20  my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center mr-2">Back</Link>
+        <div className="justify-items-center"> 
              <button className="bg-primary w-20  my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">Print</button>
         </div>
       </div>

@@ -110,11 +110,8 @@ const EditDepartmentType = () => {
               </p>
             )}
           </div>
-          <div className="flex justify-between">
-            <Link  to={'/ams/department-type'} className="bg-primary    my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center">
-              <ArrowLeft className="mr-1" />
-              Back
-            </Link>
+          <div className="justify-items-center">
+            
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}

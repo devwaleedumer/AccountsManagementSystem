@@ -123,11 +123,11 @@ const EditDepartment = () => {
               </p>
             )}
           </div>
-          <div className="flex justify-between">
+          <div className="justify-items-center">
             <button
               type="button"
               onClick={handleSubmit(onSubmit, (errors) => console.log(errors))}
-              className="bg-primary min-w-28  text-lg   my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
+              className="bg-primary min-w-28  text-center   my-4 py-2 text-white hover:bg-primary/90 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 flex justify-center"
             >
                 <PenBoxIcon className="mr-2"/>
               {!isLoading ? (

@@ -47,6 +47,7 @@ import EditEmployee from "./components/employee/EditEmployee"
 import Protected from "./components/Protected"
 import UnAuthorized from "./components/UnAuthorized"
 import AddFeeRecord from "./components/students-fee-record/AddFeeRecord"
+import ResetPassword from "./pages/reset-password"
 function App() {
 
   return (
@@ -118,6 +119,7 @@ function App() {
         <Route path="/login"  element={<Login/>}/>
         <Route path="/unauthorized"  element={<UnAuthorized/>}/>
         <Route path="/forgot-password"  element={<ForgotPassword/>}/>
+        <Route path="/reset-password"  element={<ResetPassword/>}/>
          
 
       </Routes>

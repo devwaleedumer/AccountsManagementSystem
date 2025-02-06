@@ -26,6 +26,28 @@ export const authService = createApi({
         }
       }
     }),
+      forgetPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `Accounts/forget`,
+          method: 'POST',
+          body:data,
+        }
+      
+        
+      }
+    }),
+      resetPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `Accounts/reset`,
+          method: 'POST',
+          body:data,
+        }
+      
+        
+      }
+    }),
 
     getAllUsersAsync: builder.query({
       query: () => {
@@ -49,4 +71,4 @@ export const authService = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useLoginMutation,useRegisterMutation,useGetAllUsersAsyncQuery,useGetUserMeAsyncQuery} = authService
+export const {useLoginMutation,useRegisterMutation,useGetAllUsersAsyncQuery,useGetUserMeAsyncQuery,useForgetPasswordMutation,useResetPasswordMutation} = authService

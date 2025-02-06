@@ -48,6 +48,8 @@ import Protected from "./components/Protected"
 import UnAuthorized from "./components/UnAuthorized"
 import AddFeeRecord from "./components/students-fee-record/AddFeeRecord"
 import ResetPassword from "./pages/reset-password"
+import StudentFeeHandling from "./components/students-fee-record/FeeRecord"
+import UpdateFeeRecord from "./components/students-fee-record/UpdateFeeRecord"
 function App() {
 
   return (
@@ -76,6 +78,11 @@ function App() {
         <Route path="departments/create"  element={<CreateDepartment/>}/>
         <Route path="departments/edit/:id"  element={<EditDepartment/>}/>
         <Route path="departments"  element={<Departments/>}/>
+
+      <Route path="studentFeeHandling/create"  element={<AddFeeRecord/>}/>
+        <Route path="studentFeeHandling/edit/:id"  element={<UpdateFeeRecord/>}/>
+        <Route path="studentFeeHandling"  element={<StudentFeeHandling/>}/>
+
 
         <Route path="designation/create"  element={<CreateDesignation/>}/>
         <Route path="designation/edit/:id"  element={<EditDesignation/>}/>

@@ -1,23 +1,24 @@
-import { ArrowLeft, Loader, PlusIcon, XIcon } from "lucide-react";
+import {  Loader, PlusIcon, XIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
 import { useEffect, useState } from "react";
-import { useCreateAllowanceMutation } from "../../redux/services/allowanceService";
+import { useCreateStudentFeeHandlingMutation } from "../../redux/services/studentFeeHandlingService";
 // Validation schema using Yup
 const schema = yup.object().shape({
-  name: yup.string().required("Deduction  is required"),
-  description: yup.string().required("description  is required"),
-  amount: yup.number().required("Amount  is required").typeError("Amount  is required"),
-  isRepetitive: yup.boolean().default(false),
+  department: yup.string().required("Deduction  is required"),
+  noOfSemester: yup.number().required("Amount  is required").typeError("Amount  is required"),
+  totalNoOfStudent: yup.number().required("No of semester  is required").typeError("No of semester  is number"),
+  totalFeeCollected: yup.number().required("Total fee collected  is required").typeError("Only Number"),
+  feePerSemester: yup.number().required("Fee per semester is required").typeError("Only Number"),
 });
 const AddFeeRecord = () => {
  const [showAlert, setShowAlert] = useState(true);
   // const router = useNavigate();
   const [CreateAllowance, { isLoading, isError, isSuccess }] =
-    useCreateAllowanceMutation();
+    useCreateStudentFeeHandlingMutation();
   const {
     register,
     handleSubmit,
@@ -30,10 +31,10 @@ const AddFeeRecord = () => {
   const onSubmit = async (data) => {
     await CreateAllowance(data);
      reset({
-      name: '',
-      description: '',
-      amount: '',
-      isRepetitive:false
+      department: '',
+      noOfSemester: '',
+      totalFeeCollected: '',
+      totalNoOfStudent: '',
     });
   };
   // isSuccess = false
@@ -78,59 +79,89 @@ const AddFeeRecord = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-               Allowance Name
+               Department
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="name"
               type="text"
-              placeholder="Department Type Name"
-              {...register("name")}
+              placeholder="Department  Name"
+              {...register("department")}
             />
-            {errors.name && (
+            {errors.department && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.name.message}
+                {errors.department.message}
               </p>
             )}
           </div>
           <div className="w-full">
             <label className="block  mb-1" htmlFor="description">
-              Description
+              No of Semester
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="description"
               type="text"
-              placeholder="Description"
-              {...register("description")}
+              placeholder="No of Semester"
+              {...register("noOfSemester")}
             />
-            {errors.description && (
+            {errors.noOfSemester && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.description.message}
+                {errors.noOfSemester.message}
               </p>
             )}
           </div>
            <div className="w-full">
             <label className="block  mb-1" htmlFor="amount">
-              Amount
+              Total Fee Collected
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
               id="amount"
               type="text"
-              placeholder="Amount"
-              {...register("amount")}
+              placeholder="totalFeeCollected"
+              {...register("totalFeeCollected")}
             />
-            {errors.amount && (
+            {errors.totalFeeCollected && (
               <p className="text-red-500 text-xs italic mt-1">
-                {errors.amount.message}
+                {errors.totalFeeCollected.message}
               </p>
             )}
           </div>
-            <div className="flex items-center mb-4">
-                <input {...register("isRepetitive")} id="default-checkbox" type="checkbox" value="" className="size-6  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 "/>
-                <label htmlFor="default-checkbox" className="ms-2  font-medium  ">Is Repetitive</label>
-            </div>
+           <div className="w-full">
+            <label className="block  mb-1" htmlFor="amount">
+              Total No of Student 
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="amount"
+              type="text"
+              placeholder="Total no of students"
+              {...register("totalNoOfStudent")}
+            />
+            {errors.totalFeeCollected && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.totalNoOfStudent.message}
+              </p>
+            )}
+          </div>
+                <div className="w-full">
+            <label className="block  mb-1" htmlFor="amount">
+              Fee Per Semester 
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="amount"
+              type="text"
+              placeholder="Total no of students"
+              {...register("feePerSemester")}
+            />
+            {errors.feePerSemester && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.feePerSemester.message}
+              </p>
+            )}
+          </div>
           <div className="flex justify-center">
             
             <button

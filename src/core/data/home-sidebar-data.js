@@ -1,4 +1,4 @@
-import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandingIcon, Receipt, ReceiptText, Timer, UserRoundCheckIcon, UserRoundCogIcon, UserRoundPenIcon, UserRoundPlusIcon, Users2, UserSquare2Icon, UsersRoundIcon } from "lucide-react";
+import { Boxes, Building2, BuildingIcon, Coins, LayoutDashboard, PersonStandingIcon, Receipt, ReceiptText, Timer, UserRoundCheckIcon, UserRoundCogIcon, UserRoundPenIcon, UserRoundPlusIcon, Users2, UserSquare2Icon, UsersRoundIcon } from "lucide-react";
 
  const sideBarMenuItems = [
     {
@@ -40,6 +40,11 @@ import { Boxes, Building, Building2, BuildingIcon, LayoutDashboard, PersonStandi
         title: "Department Type",
         to: "department-type",
         icon: BuildingIcon
+    },
+     {
+        title: "Fee Handling",
+        to: "studentFeeHandling",
+        icon: Coins
     },
      {
         title: "Designations",

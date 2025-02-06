@@ -9,6 +9,7 @@ import { employeeService } from './services/employeeService'
 import { employeeTypeService } from './services/employeeTypeService'
 import { deductionService } from './services/deductionService'
 import { allowanceService } from './services/allowanceService'
+import { studentFeeHandlingService } from './services/studentFeeHandlingService'
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     [employeeTypeService.reducerPath]: employeeTypeService.reducer,
     [deductionService.reducerPath]: deductionService.reducer,
     [allowanceService.reducerPath]: allowanceService.reducer,
+    [studentFeeHandlingService.reducerPath]: studentFeeHandlingService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authService.middleware)
@@ -32,7 +34,8 @@ export const store = configureStore({
   .concat(employeeService.middleware)
   .concat(employeeTypeService.middleware)
   .concat(allowanceService.middleware)
-  .concat(deductionService.middleware),
+  .concat(deductionService.middleware)
+  .concat(studentFeeHandlingService.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

@@ -96,7 +96,7 @@ const AddFeeRecord = () => {
           </div>
           <div className="w-full">
             <label className="block  mb-1" htmlFor="description">
-              No of Semester
+              Total Semesters
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -111,7 +111,7 @@ const AddFeeRecord = () => {
               </p>
             )}
           </div>
-           <div className="w-full">
+           { <div className="w-full">
             <label className="block  mb-1" htmlFor="amount">
               Total Fee Collected
             </label>
@@ -127,7 +127,7 @@ const AddFeeRecord = () => {
                 {errors.totalFeeCollected.message}
               </p>
             )}
-          </div>
+          </div> }
            <div className="w-full">
             <label className="block  mb-1" htmlFor="amount">
               Total No of Student 
@@ -147,7 +147,7 @@ const AddFeeRecord = () => {
           </div>
                 <div className="w-full">
             <label className="block  mb-1" htmlFor="amount">
-              Fee Per Semester 
+              Fee Per Semester
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"

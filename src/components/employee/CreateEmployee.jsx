@@ -631,23 +631,7 @@ const CreateEmployee = () => {
             <span className="text-xl">Employee Bank Details</span>
         </div>
        <div className="grid grid-cols-3 gap-4">
-       <div className="w-full">
-            <label className="block  mb-1" htmlFor="branchName">
-              Branch Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="branchName"
-              type="text"
-              placeholder="Brach Name"
-              {...register("branchName")}
-            />
-            {errors.branchName && (
-              <p className="text-red-500 text-xs italic mt-1">
-                {errors.branchName.message}
-              </p>
-            )}
-          </div>
+      
            {/* Bank Name */}
           <div className="w-full">
             <label className="block  mb-1" htmlFor="bankName">
@@ -685,6 +669,23 @@ const CreateEmployee = () => {
             {errors.bankName && (
               <p className="text-red-500 text-xs italic mt-1">
                 {errors.bankName.message}
+              </p>
+            )}
+          </div>
+          <div className="w-full">
+            <label className="block  mb-1" htmlFor="branchName">
+              Branch Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="branchName"
+              type="text"
+              placeholder="Brach Name"
+              {...register("branchName")}
+            />
+            {errors.branchName && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.branchName.message}
               </p>
             )}
           </div>

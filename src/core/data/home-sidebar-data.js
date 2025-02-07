@@ -1,4 +1,4 @@
-import { Boxes, Building2, BuildingIcon, Coins, LayoutDashboard, PersonStandingIcon, Receipt, ReceiptText, Timer, UserRoundCheckIcon, UserRoundCogIcon, UserRoundPenIcon, UserRoundPlusIcon, Users2, UserSquare2Icon, UsersRoundIcon } from "lucide-react";
+import { BadgeCheck, BadgeDollarSignIcon, Boxes, Building2, BuildingIcon, CircleSlashIcon, Coins, Currency, DollarSign, DollarSignIcon, FenceIcon, LayoutDashboard, LucideDollarSign, Minus, MinusCircle, Notebook, PersonStandingIcon, Plus, PlusCircle, Receipt, ReceiptText, Timer, UserCog, UserCog2, UserRoundCheckIcon, UserRoundCogIcon, UserRoundPenIcon, UserRoundPlusIcon, Users2, UserSquare2Icon, UsersRoundIcon, Wallet } from "lucide-react";
 
  const sideBarMenuItems = [
     {
@@ -19,18 +19,34 @@ import { Boxes, Building2, BuildingIcon, Coins, LayoutDashboard, PersonStandingI
     {
         title: "Salary",
         to: "salary",
-        icon: ReceiptText
+        icon: DollarSign
+    },
+    {
+        title: "Base Pay",
+        to: "base-pay",
+        icon: Wallet
     },
      {
         title: "Allowances",
         to: "allowance",
-        icon: Receipt
+        icon: Plus
     },
      {
         title: "Deductions",
         to: "deduction",
-        icon: Boxes
+        icon: Minus
     },
+    {
+        title: "Fee Handling",
+        to: "studentFeeHandling",
+        icon: BadgeDollarSignIcon
+    },
+    {
+        title: "Employee Types",
+        to: "employee-type",
+        icon: UserCog
+    },
+    
      {
         title: "Departments",
         to: "departments",
@@ -41,26 +57,13 @@ import { Boxes, Building2, BuildingIcon, Coins, LayoutDashboard, PersonStandingI
         to: "department-type",
         icon: BuildingIcon
     },
-     {
-        title: "Fee Handling",
-        to: "studentFeeHandling",
-        icon: Coins
-    },
+    
      {
         title: "Designations",
         to: "designation",
-        icon: Timer
+        icon: BadgeCheck
     },
-     {
-        title: "Employee Types",
-        to: "employee-type",
-        icon: Boxes
-    },
-    {
-        title: "Base Pay",
-        to: "base-pay",
-        icon: Boxes
-    },
+     
     
 ]
 

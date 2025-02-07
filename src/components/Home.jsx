@@ -1,4 +1,4 @@
-import { BadgeCheck, Building, Building2, BuildingIcon, CalendarDays, DollarSign, Mail, Minus, Phone, Plus, UserCircle, UserCog, Users, Wallet } from "lucide-react"
+import { BadgeCheck, BadgeDollarSign, Building, Building2, BuildingIcon, CalendarDays, DollarSign, Mail, Minus, Phone, Plus, UserCircle, UserCog, Users, Users2, Wallet } from "lucide-react"
 import { Link } from "react-router-dom"
 import { getUser } from "../core/data/tokenLocalStorageService"
 // Mock user data - In a real app, this would come from your auth/API
@@ -99,14 +99,15 @@ const user = getUser();
         {/* Navigation Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { title: 'Deduction', icon: <Minus className="h-6 w-6" />, href: 'deduction' },
-            { title: 'Employee Type', icon: <UserCog className="h-6 w-6" />, href: 'employee-type' },
-            { title: 'Allowance', icon: <Plus className="h-6 w-6" />, href: 'allowance' },
-            { title: 'Department', icon: <Building className="h-6 w-6" />, href: 'departments' },
-            { title: 'Department Type', icon: <BuildingIcon className="h-6 w-6" />, href: 'department-type' },
+            { title: 'Employee', icon: <Users2 className="h-6 w-6" />, href: 'employees' },
             { title: 'Salary', icon: <DollarSign className="h-6 w-6" />, href: 'salary' },
             { title: 'Base Pay', icon: <Wallet className="h-6 w-6" />, href: 'base-pay' },
-            { title: 'Employee', icon: <UserCircle className="h-6 w-6" />, href: 'employees' },
+            { title: 'Allowance', icon: <Plus className="h-6 w-6" />, href: 'allowance' },
+            { title: 'Deduction', icon: <Minus className="h-6 w-6" />, href: 'deduction' },
+            { title: 'FeeHandling', icon: <BadgeDollarSign className="h-6 w-6" />, href: 'studentFeeHandling' },
+            { title: 'Employee Type', icon: <UserCog className="h-6 w-6" />, href: 'employee-type' },
+            { title: 'Department', icon: <Building2 className="h-6 w-6" />, href: 'departments' },
+            { title: 'Department Type', icon: <BuildingIcon className="h-6 w-6" />, href: 'department-type' },
             { title: 'Designation', icon: <BadgeCheck className="h-6 w-6" />, href: 'designation' },
           ].map((item, index) => (
             <Link

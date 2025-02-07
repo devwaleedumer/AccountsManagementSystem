@@ -65,9 +65,9 @@ const Table = () => {
                 <th scope="col" className="px-6 py-3 border-r">
                     E-Mail Address
                 </th>
-                <th scope="col" className="px-6 py-3 border-r">
+                {/* <th scope="col" className="px-6 py-3 border-r">
                     Status
-                </th>
+                </th> */}
                {
                 user.role.toLowerCase() === 'admin' &&
                  <th scope="col" className="px-6 py-3 border-r">
@@ -99,9 +99,9 @@ const Table = () => {
                 <td className="px-6 py-4">
                    {item.email}
                 </td>
-                <td className="px-6 py-4">
+                {/* <td className="px-6 py-4">
                     {item.isActive ? "Active" : "Inactive"}
-                </td>
+                </td> */}
                 {
                     user.role.toLowerCase() === 'admin' &&
                     <td className="flex items-center px-6 py-4 space-x-2">

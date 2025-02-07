@@ -40,7 +40,7 @@ const {
 
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-center font-roboto px-4 bg-image" >
+    <div className="w-full min-h-screen flex justify-center items-center font-roboto px-4 bg-image bg-gray-300" >
         <div className="max-w-md w-full px-4 md:px-8 py-8  bg-white rounded-lg shadow-lg border bg-image">
             <div className="flex justify-center items-center">
             <img src="/src/assets/images/logo.svg" className="size-20"  alt="logo" />

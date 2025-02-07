@@ -74,7 +74,7 @@ const CreateBasicPay = () => {
         <div className="space-y-4 p-6">
           <div className="w-full">
             <label className="block  mb-1" htmlFor="name">
-              Basic Pay Scale Name
+              Basic Pay Scale 
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"

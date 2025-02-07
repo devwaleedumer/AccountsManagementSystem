@@ -57,7 +57,7 @@ function App() {
     <Provider store={store}>
        <BrowserRouter>
       <Routes>
-        <Route element={<Protected allowedRoles={["Admin","Auditor","Data Entry Operator"]}  />}>
+        <Route element={<Protected allowedRoles={["Admin","Auditor", "Salary Incharge" ,"Data Entry Operator"]}  />}>
           <Route  path="/ams"  element={<Layout/>}>
            <Route  index element={<Home/>}/>  
 

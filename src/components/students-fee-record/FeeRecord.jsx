@@ -187,15 +187,15 @@ const totalRevenueFromFee   = data?.reduce((total, item) => total + item.totalFe
                     Department
                 </th>
                  <th scope="col" className="px-6 py-3 border-r">
-                    Total Semesters
+                    Semester
                 </th>
 
                 <th scope="col" className="px-6 py-3 border-r">
-                    Total Students
+                    Total No Of Students
                 </th>
 
                  <th scope="col" className="px-6 py-3 border-r">
-                    Fee Per Semester
+                    Semester Fee
                 </th>
                  <th scope="col" className="px-6 py-3 border-r">
                     Total fee collected

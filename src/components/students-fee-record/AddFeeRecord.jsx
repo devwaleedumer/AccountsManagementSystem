@@ -96,7 +96,7 @@ const AddFeeRecord = () => {
           </div>
           <div className="w-full">
             <label className="block  mb-1" htmlFor="description">
-              Total Semesters
+              Semester 
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -111,26 +111,10 @@ const AddFeeRecord = () => {
               </p>
             )}
           </div>
-           { <div className="w-full">
-            <label className="block  mb-1" htmlFor="amount">
-              Total Fee Collected
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              id="amount"
-              type="text"
-              placeholder="totalFeeCollected"
-              {...register("totalFeeCollected")}
-            />
-            {errors.totalFeeCollected && (
-              <p className="text-red-500 text-xs italic mt-1">
-                {errors.totalFeeCollected.message}
-              </p>
-            )}
-          </div> }
+          
            <div className="w-full">
             <label className="block  mb-1" htmlFor="amount">
-              Total No of Student 
+              Total No of Students 
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -162,6 +146,23 @@ const AddFeeRecord = () => {
               </p>
             )}
           </div>
+          { <div className="w-full">
+            <label className="block  mb-1" htmlFor="amount">
+              Total Fee Collected
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              id="amount"
+              type="text"
+              placeholder="totalFeeCollected"
+              {...register("totalFeeCollected")}
+            />
+            {errors.totalFeeCollected && (
+              <p className="text-red-500 text-xs italic mt-1">
+                {errors.totalFeeCollected.message}
+              </p>
+            )}
+          </div> }
           <div className="flex justify-center">
             
             <button

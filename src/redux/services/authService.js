@@ -26,6 +26,32 @@ export const authService = createApi({
         }
       }
     }),
+      edit: builder.mutation({
+      query: (data) => {
+        return {
+          url: `Accounts`,
+          method: 'PUT',
+          body:data,
+        }
+      }
+    }),
+      register: builder.mutation({
+      query: (data) => {
+        return {
+          url: `Accounts/register`,
+          method: 'POST',
+          body:data,
+        }
+      }
+    }),
+      deleteUser: builder.mutation({
+      query: (id) => {
+        return {
+          url: `Accounts/${id}`,
+          method: 'DELETE',
+        }
+      }
+    }),
       forgetPassword: builder.mutation({
       query: (data) => {
         return {
@@ -71,4 +97,4 @@ export const authService = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useLoginMutation,useRegisterMutation,useGetAllUsersAsyncQuery,useGetUserMeAsyncQuery,useForgetPasswordMutation,useResetPasswordMutation} = authService
+export const {useLoginMutation,useRegisterMutation,useEditMutation,useGetAllUsersAsyncQuery,useGetUserMeAsyncQuery,useForgetPasswordMutation,useResetPasswordMutation,useDeleteUserMutation,} = authService

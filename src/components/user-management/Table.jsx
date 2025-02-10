@@ -1,11 +1,21 @@
 import { LoaderCircleIcon, LucideEye, PenSquareIcon, Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"
-import { useGetAllUsersAsyncQuery } from "../../redux/services/authService";
+import { useDeleteUserMutation, useGetAllUsersAsyncQuery } from "../../redux/services/authService";
 import { getUser } from "../../core/data/tokenLocalStorageService";
+import { useEffect } from "react";
 
 const Table = () => {
-    const {data,isLoading}=useGetAllUsersAsyncQuery();   
+    const {data,isLoading,refetch}=useGetAllUsersAsyncQuery();   
+    const [deleteUser,{isSuccess,isError}] = useDeleteUserMutation()
+    
     const user = getUser();
+    const onDeleteUser = async (id) => {
+       await deleteUser(id);
+    }
+    useEffect(() => {
+
+        refetch()
+    },[isSuccess,isError])
   return (
   isLoading ?
     <div className='w-full h-full'>
@@ -105,15 +115,15 @@ const Table = () => {
                 {
                     user.role.toLowerCase() === 'admin' &&
                     <td className="flex items-center px-6 py-4 space-x-2">
-                   <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
+                   {/* <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <PenSquareIcon className="size-5"/>
-                   </button>
-                     <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
+                   </button> */}
+                     <button type="button" onClick={ async() => { await onDeleteUser(item.id)}}  className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <Trash2 className="size-5"/>
                    </button>
-                     <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
+                     {/* <button type="button" className="bg-primary  text-primary-foreground  focus:ring-4 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-3 py-2 text-center">
                     <LucideEye className="size-5"/>
-                   </button>
+                   </button> */}
 
                 </td>
                 }
